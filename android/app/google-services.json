@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "906459788224",
+    "firebase_url": "https://cerevro-cf50f.firebaseio.com",
+    "project_id": "cerevro-cf50f",
+    "storage_bucket": "cerevro-cf50f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906459788224:android:1e10d27b059607beaa8e25",
+        "android_client_info": {
+          "package_name": "app.cerevro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906459788224-vqe5c6aic8t1il6l4jsjcf8d8d44br8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1XFdnLfbFX2B8QuvEU0oQNLIWgE9IYXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906459788224-vqe5c6aic8t1il6l4jsjcf8d8d44br8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
