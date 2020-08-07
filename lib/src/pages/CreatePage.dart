@@ -1,4 +1,4 @@
-import 'package:cerevro_app/src/components/button.dart';
+import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/components/textCamps.dart';
 import 'package:cerevro_app/src/pages/HomePage.dart';
 import 'package:cerevro_app/src/static/statics.dart';
@@ -28,18 +28,18 @@ class _CreatePageState extends State<CreatePage> {
       appBar: AppBar(
         leading: GestureDetector(child: Icon(Icons.arrow_back_ios), onTap: () => Navigator.pop(context)),
         title: Text("Registrate con tu email"),
-        backgroundColor: ColorC.principal,
+        backgroundColor: CerevroColors.accent,
       ),
       body: SingleChildScrollView(
               child: Column(
                 children: <Widget>[_form(context), 
                 SizedBox(height: 10.0,),
-                FlatButton(
+                /* FlatButton(
                   child:Buton(
                    height: 50,
                    width: 200,
                    text: "Registrarme ahora",
-                ), onPressed: () => _validateCamps(),),
+                ), onPressed: () => _validateCamps(),), */
                 SizedBox(height: 40.0,),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -58,7 +58,7 @@ class _CreatePageState extends State<CreatePage> {
                                   color: Colors.black, fontSize: 16.0)),
                           Text(" Ingresa aquí",
                               style: TextStyle(
-                                  color: ColorC.principal,
+                                  color: CerevroColors.accent,
                                   fontSize: 16.0)),
                         ],
                       ),
@@ -162,12 +162,12 @@ class _CreatePageState extends State<CreatePage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title, style: TextStyle(color: ColorC.principal)),
+            title: Text(title, style: TextStyle(color: CerevroColors.accent)),
             content: Text(content),
             actions: <Widget>[
               FlatButton(
                 child: Text("Aceptar",
-                    style: TextStyle(color: ColorC.principal)),
+                    style: TextStyle(color: CerevroColors.accent)),
                 onPressed: () => Navigator.of(context).pop(),
               )
             ],
@@ -186,12 +186,12 @@ class _CreatePageState extends State<CreatePage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title, style: TextStyle(color: ColorC.principal)),
+            title: Text(title, style: TextStyle(color: CerevroColors.accent)),
             content: Text(content),
             actions: <Widget>[
               FlatButton(
                 child: Text("Aceptar",
-                    style: TextStyle(color: ColorC.principal)),
+                    style: TextStyle(color: CerevroColors.accent)),
                 onPressed: (){
                   Navigator.of(context).pop();
                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>HomePage()), (_) => false);

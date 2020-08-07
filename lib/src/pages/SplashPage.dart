@@ -36,10 +36,10 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     /* _createDB(); */
     return Scaffold(
-      backgroundColor: ColorC.principal,
+      backgroundColor: CerevroColors.accent,
       body: Center(
         child: Container(
-          child: Text("Bienvenido!", style: TextStyle(color: ColorC.letter, fontSize: 30.0),)
+          child: Text("Bienvenido!", style: TextStyle(color: Colors.white, fontSize: 30.0),)
         )
       )
     );

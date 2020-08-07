@@ -49,7 +49,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
           if (!snapshot.hasData) {
            return Center(
              child: CircularProgressIndicator(
-                backgroundColor: ColorC.principal),
+                backgroundColor: CerevroColors.accent),
            );
           }else{
             return _body(context, arguments);
@@ -68,8 +68,8 @@ class _ExperiencePageState extends State<ExperiencePage> {
 
           child: FloatingActionButton(
             elevation: 3,
-            backgroundColor: ColorC.letter,
-            child: Icon(Icons.arrow_back_ios, color: ColorC.principal),
+            backgroundColor: Colors.white,
+            child: Icon(Icons.arrow_back_ios, color: CerevroColors.accent),
             onPressed: () => Navigator.of(context).pop(),
           ),
         )
@@ -82,7 +82,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
         imageUrl: arguments.image,
         placeholder: (context, url) => Center(
         child: new CircularProgressIndicator(
-          backgroundColor: ColorC.principal,
+          backgroundColor: CerevroColors.accent,
         ),
       ),
         fit: BoxFit.cover,
@@ -96,7 +96,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
       margin: EdgeInsets.only(top: 30),
       width: 200,
       height: 200,
-      child: Icon(Icons.play_circle_outline, size: 100, color: ColorC.principal,))), 
+      child: Icon(Icons.play_circle_outline, size: 100, color: CerevroColors.accent,))), 
       onTap: (){
         _showMessage(context, "Falta un poco...", "Esta experiecnia aún no está disponible, pero no te preocupes te mantendremos informado");
         //Navigator.of(context).pushNamed(WebViewPage.tag, arguments:experiences[0].url);
@@ -129,7 +129,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
                 child: star,
-                /* (buy)?Icon(favorito, color: ColorC.letter) : Icon(Icons.attach_money, color: ColorC.letter), */
+                /* (buy)?Icon(favorito, color: Colors.white) : Icon(Icons.attach_money, color: Colors.white), */
                 onPressed: (){
                   //_confirmMessage(context);
                   if(star == Icon(Icons.star_border)){
@@ -161,7 +161,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
           if (!snapshot.hasData) {
            return Center(
              child: CircularProgressIndicator(
-                backgroundColor: ColorC.principal),
+                backgroundColor: CerevroColors.accent),
            );
           } else {
            return Container(
@@ -180,14 +180,14 @@ class _ExperiencePageState extends State<ExperiencePage> {
                             imageUrl: experiences[index].image,
                               placeholder: (context, url) => Center(
                                 child: new CircularProgressIndicator(
-                                  backgroundColor: ColorC.principal,
+                                  backgroundColor: CerevroColors.accent,
                                 ),
                               ),
                               fit: BoxFit.cover,
                               errorWidget: (context, url, error) => new Icon(Icons.error),
                         ),
                         trailing: FlatButton(
-                           child: Icon(Icons.play_circle_filled, color: ColorC.principal),
+                           child: Icon(Icons.play_circle_filled, color: CerevroColors.accent),
                           onPressed:() async {
                             final url = experiences[index].url;
                             if (await canLaunch(url)) {
@@ -278,12 +278,12 @@ class _ExperiencePageState extends State<ExperiencePage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text("Comprar esta ventura", style: TextStyle(color: ColorC.principal)),
+            title: Text("Comprar esta ventura", style: TextStyle(color: CerevroColors.accent)),
             content: Text("Estas a un paso de disfrutar esta ventura: \$1.00"),
             actions: <Widget>[
               FlatButton(
                 child: Text("Comprar ahora",
-                    style: TextStyle(color: ColorC.principal)),
+                    style: TextStyle(color: CerevroColors.accent)),
                 onPressed: () { 
                   Navigator.of(context).pop();
                 }
@@ -304,12 +304,12 @@ class _ExperiencePageState extends State<ExperiencePage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title, style: TextStyle(color: ColorC.principal)),
+            title: Text(title, style: TextStyle(color: CerevroColors.accent)),
             content: Text(content),
             actions: <Widget>[
               FlatButton(
                 child: Text("Aceptar",
-                    style: TextStyle(color: ColorC.principal)),
+                    style: TextStyle(color: CerevroColors.accent)),
                 onPressed: () => Navigator.of(context).pop(),
               )
             ],

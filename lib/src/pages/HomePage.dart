@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cerevro_app/src/components/button.dart';
+import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/models/Topic.dart';
 import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
@@ -28,11 +28,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorC.letter,
-      appBar: AppBar(elevation: 0, backgroundColor: ColorC.letter, title: Text(Texts.tilte, style: TextStyle(fontSize: 35, color: ColorC.principal),),
+      backgroundColor: Colors.white,
+      appBar: AppBar(elevation: 0, backgroundColor: Colors.white, title: Text(Texts.tilte, style: TextStyle(fontSize: 35, color: CerevroColors.accent),),
        actions: [
          GestureDetector(
-           child: Icon(Icons.more_vert, color: ColorC.principal, size: 25.0,),
+           child: Icon(Icons.more_vert, color: CerevroColors.accent, size: 25.0,),
            onTap: () => _showOptions(context),
          )
        ],),
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(
-                backgroundColor: ColorC.principal),
+                backgroundColor: CerevroColors.accent),
           );
         } else {
           return Container(
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                               imageUrl: topics[index].image,
                               placeholder: (context, url) => Center(
                                 child: new CircularProgressIndicator(
-                                  backgroundColor: ColorC.principal,
+                                  backgroundColor: CerevroColors.accent,
                                 ),
                               ),
                               fit: BoxFit.cover,
@@ -97,12 +97,12 @@ class _HomePageState extends State<HomePage> {
                           width: 200,
                           child: Text(topics[index].resume, style: TextStyle(color: Colors.white, fontSize: 12,), textAlign: TextAlign.center,)
                         ),
-                        FlatButton(
+                        /* FlatButton(
                           child: Buton(text: "Ver ahora", width: 150, height: 30),
                           onPressed: () => {
                             Navigator.of(context).pushNamed(ExperiencePage.tag, arguments: topics[index])
                           },
-                        )
+                        ) */
                         ],)
                       ],
                     ),    
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               margin: EdgeInsets.only(left: 20),
-              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:ColorC.principal), textAlign: TextAlign.start)),
+              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:CerevroColors.accent), textAlign: TextAlign.start)),
             Flexible(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -168,14 +168,14 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               height: 30,
                               width: 30,
-                              child: Icon(Icons.play_arrow,color: ColorC.letter),
+                              child: Icon(Icons.play_arrow,color: Colors.white),
                               decoration: BoxDecoration(
                               gradient: LinearGradient(
                               begin: FractionalOffset(0.5, 1.0),
                               end: FractionalOffset(0.0, 0.0),
                               colors: [
-                                ColorC.principal,
-                                ColorC.principal
+                                CerevroColors.accent,
+                                CerevroColors.accent
                               ]),
                               borderRadius: BorderRadius.circular(100.0)),
                             ),
@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               margin: EdgeInsets.only(left: 20),
-              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:ColorC.principal), textAlign: TextAlign.start)),
+              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:CerevroColors.accent), textAlign: TextAlign.start)),
             Flexible(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -245,14 +245,14 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               height: 30,
                               width: 30,
-                              child: Icon(Icons.play_arrow,color: ColorC.letter),
+                              child: Icon(Icons.play_arrow,color: Colors.white),
                               decoration: BoxDecoration(
                               gradient: LinearGradient(
                               begin: FractionalOffset(0.5, 1.0),
                               end: FractionalOffset(0.0, 0.0),
                               colors: [
-                                ColorC.principal,
-                                ColorC.principal
+                                CerevroColors.accent,
+                                CerevroColors.accent
                               ]),
                               borderRadius: BorderRadius.circular(100.0)),
                             ),
@@ -282,7 +282,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text("Opciones", style: TextStyle(color: ColorC.principal)),
+            title: Text("Opciones", style: TextStyle(color: CerevroColors.accent)),
             content: Container(
               height: 55,
               child: Column(
@@ -290,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                   FlatButton(
                   shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                  color: ColorC.principal,
+                  color: CerevroColors.accent,
                   child: Text("Cerrar sesión",
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {

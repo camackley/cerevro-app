@@ -6,10 +6,9 @@ class Texts{
   static String login = "Ingresar";
 }
 
-class ColorC{
-  static Color principal = Color.fromRGBO(14, 68, 123, 1.0);
-  static Color second = Color.fromRGBO(244, 131, 25, 1.0);
-  static Color letter = Colors.white;
+class CerevroColors{
+  static Color prymary = Color.fromRGBO(14, 68, 123, 1.0);
+  static Color accent = Color.fromRGBO(244, 131, 25, 1.0);
 }
 
 class Assets{

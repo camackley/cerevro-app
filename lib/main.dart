@@ -15,9 +15,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cerevro',
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      theme: ThemeData(
+              primaryColor: Color.fromRGBO(14, 68, 123, 1.0), 
+              accentColor: Color.fromRGBO(244, 131, 25, 1.0),
+              fontFamily: 'VagRoundedStd'
+      ),
+      title: 'Cerevro',
+      home: LoginPage(),
       routes: <String, WidgetBuilder>{
         HomePage.tag: (context)=>HomePage(),
         LoginPage.tag: (context) =>LoginPage(),
