@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                           Text("¿No tines cuenta?",
                               style: TextStyle(
                                   color: Colors.black, fontSize: 16.0)),
-                          Text("Registrarte ahora",
+                          Text(" Registrarte ahora",
                               style: TextStyle(
                                   color: ColorC.principal,
                                   fontSize: 16.0)),
@@ -94,8 +94,8 @@ class _LoginPageState extends State<LoginPage> {
               begin: FractionalOffset(0.5, 1.0),
               end: FractionalOffset(0.0, 0.0),
               colors: [
-                Colors.blue,
-                Colors.blueAccent
+                ColorC.principal,
+                ColorC.principal
               ]),
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100.0))),
     );
@@ -107,21 +107,23 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Center(
-              child: Column(
-            children: <Widget>[
-              /* Image(image: AssetImage('../images/logo.png')), */
-              Text(
-                Texts.tilte,
-                style: TextStyle(color: Colors.white, fontSize: 25.0),
+            child: Container(
+              padding: EdgeInsets.all(30),
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                color: ColorC.letter,
+                /* image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/logotipo.png")), */
+                borderRadius: BorderRadius.circular(100)
               ),
-            ],
-          )),
-          SizedBox(
-            height: 70.0,
+              child: Image(image: AssetImage("assets/logotipo.png"),)
+            ),
           ),
           SizedBox(
-            height: 40.0,
-          )
+            height: 50.0,
+          ),
         ],
       ),
     );

@@ -7,6 +7,7 @@ import 'package:cerevro_app/src/static/statics.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 //import 'package:stripe_native/stripe_native.dart';
 
 class ExperiencePage extends StatefulWidget {
@@ -97,7 +98,8 @@ class _ExperiencePageState extends State<ExperiencePage> {
       height: 200,
       child: Icon(Icons.play_circle_outline, size: 100, color: ColorC.principal,))), 
       onTap: (){
-        Navigator.of(context).pushNamed(WebViewPage.tag, arguments:experiences[0].url);
+        _showMessage(context, "Falta un poco...", "Esta experiecnia aún no está disponible, pero no te preocupes te mantendremos informado");
+        //Navigator.of(context).pushNamed(WebViewPage.tag, arguments:experiences[0].url);
       },);
     final card = Container(
       margin: EdgeInsets.only(top: 250, right: 30, left: 30),
@@ -108,10 +110,16 @@ class _ExperiencePageState extends State<ExperiencePage> {
         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
         child: Center(child: 
-        Column(children: [SizedBox(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [SizedBox(
             height: 10,
           ),
-          Text(arguments.title, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+          FittedBox(
+            fit:BoxFit.fitWidth, 
+            child: Text(arguments.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
           SizedBox(
             height: 20,
           ),
@@ -167,7 +175,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                       child: ListTile(
-                        title: Text(experiences[index].title),
+                        title: FittedBox(child:Text(experiences[index].title, style: TextStyle(fontSize: 30),)),
                         leading: CachedNetworkImage(
                             imageUrl: experiences[index].image,
                               placeholder: (context, url) => Center(
@@ -179,9 +187,16 @@ class _ExperiencePageState extends State<ExperiencePage> {
                               errorWidget: (context, url, error) => new Icon(Icons.error),
                         ),
                         trailing: FlatButton(
-                          child: Icon(Icons.play_circle_filled, color: ColorC.principal),
-                          onPressed:() {
-                            Navigator.of(context).pushNamed(WebViewPage.tag, arguments:experiences[index].url);
+                           child: Icon(Icons.play_circle_filled, color: ColorC.principal),
+                          onPressed:() async {
+                            final url = experiences[index].url;
+                            if (await canLaunch(url)) {
+                                await launch(url);
+                            } else {
+                            throw 'Could not launch $url';
+                            }
+                            //_showMessage(context, "Falta ún poco...", "Esta experiencia aún no está disponible :( Pero no te preocupes te estaremos informando");
+                            //Navigator.of(context).pushNamed(WebViewPage.tag, arguments:experiences[index].url);
                           },
                         ),
                       )
@@ -272,6 +287,30 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 onPressed: () { 
                   Navigator.of(context).pop();
                 }
+              )
+            ],
+          );
+        });
+
+    return Container();
+  }
+
+    Widget _showMessage(BuildContext context, String title, String content) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            elevation: 15.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            title: Text(title, style: TextStyle(color: ColorC.principal)),
+            content: Text(content),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Aceptar",
+                    style: TextStyle(color: ColorC.principal)),
+                onPressed: () => Navigator.of(context).pop(),
               )
             ],
           );

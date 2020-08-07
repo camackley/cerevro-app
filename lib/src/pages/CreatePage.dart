@@ -28,7 +28,7 @@ class _CreatePageState extends State<CreatePage> {
       appBar: AppBar(
         leading: GestureDetector(child: Icon(Icons.arrow_back_ios), onTap: () => Navigator.pop(context)),
         title: Text("Registrate con tu email"),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: ColorC.principal,
       ),
       body: SingleChildScrollView(
               child: Column(
@@ -56,7 +56,7 @@ class _CreatePageState extends State<CreatePage> {
                           Text("¿Ya tines cuenta?",
                               style: TextStyle(
                                   color: Colors.black, fontSize: 16.0)),
-                          Text("Ingresa aquí",
+                          Text(" Ingresa aquí",
                               style: TextStyle(
                                   color: ColorC.principal,
                                   fontSize: 16.0)),

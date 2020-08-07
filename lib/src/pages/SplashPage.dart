@@ -39,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: ColorC.principal,
       body: Center(
         child: Container(
-          child: Text("Bienvenido!", style: TextStyle(color: ColorC.letter, fontSize: 20.0),)
+          child: Text("Bienvenido!", style: TextStyle(color: ColorC.letter, fontSize: 30.0),)
         )
       )
     );
@@ -49,7 +49,7 @@ class _SplashPageState extends State<SplashPage> {
     var uuid = Uuid();
     final _firestoreInstance = Firestore.instance; 
 
-    List exper = new List();
+    /* List exper = new List();
     for(int i=0; i<101; i++){
       var uid = uuid.v4();
       Map<String, dynamic> data = {   
@@ -74,6 +74,24 @@ class _SplashPageState extends State<SplashPage> {
         _firestoreInstance.collection(BD.topics).document(id).setData(data);
         exper.clear();
       }
-    }
+    } */
+    var id = uuid.v4();
+    final topicsImage = [
+      "https://image.freepik.com/vector-gratis/sistema-solar-infografia-eje-planetas_23-2148400561.jpg",
+      "https://image.freepik.com/vector-gratis/ilustracion-mundo-dinosaurios-salvajes_1284-23622.jpg",
+      "https://image.freepik.com/foto-gratis/figura-medica-masculina-3d-que-muestra-escapula-hombro_1048-8833.jpg",
+      "https://image.freepik.com/vector-gratis/paisaje-submarino-animales-marinos_107791-623.jpg",
+      "https://image.freepik.com/vector-gratis/ilustracion-grafica-ubicacion-mapa-continente-mundial_53876-6448.jpg"
+    ];
+
+    final experienceImage=[
+      [
+        "https://image.freepik.com/vector-gratis/sistema-planeta-explorando-planetas-aterrizando-ilustracion-banner-personaje-dibujos-animados-jupiter-saturno-urano-neptuno_101903-1682.jpg",
+        "https://image.freepik.com/vector-gratis/planetas-espacio-exterior-satelites-meteoritos-ilustracion_33099-2352.jpg",
+        "https://image.freepik.com/vector-gratis/astronauta-escena-alienigena_1308-32590.jpg",
+        "https://image.freepik.com/vector-gratis/coleccion-planeta-dibujado-mano_23-2148319859.jpg"
+      ],[
+        ""
+      ]];
   }
 }

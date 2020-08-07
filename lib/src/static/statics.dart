@@ -7,7 +7,8 @@ class Texts{
 }
 
 class ColorC{
-  static Color principal = Colors.blueAccent;
+  static Color principal = Color.fromRGBO(14, 68, 123, 1.0);
+  static Color second = Color.fromRGBO(244, 131, 25, 1.0);
   static Color letter = Colors.white;
 }
 

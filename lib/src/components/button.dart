@@ -1,3 +1,4 @@
+import 'package:cerevro_app/src/static/statics.dart';
 import 'package:flutter/material.dart';
 
 class Buton extends StatelessWidget {
@@ -30,8 +31,8 @@ class Buton extends StatelessWidget {
               begin: FractionalOffset(0.5, 1.0),
               end: FractionalOffset(0.0, 0.0),
               colors: [
-                Colors.blue,
-                Colors.blueAccent
+                ColorC.principal,
+                ColorC.principal
               ]),
           borderRadius: BorderRadius.circular(100.0)),
     );

@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                     ),    
                   );
               },
-              itemCount: 5,
+              itemCount: 1,
               control: SwiperControl(
                 iconNext: null,
                 iconPrevious: null,
@@ -174,8 +174,8 @@ class _HomePageState extends State<HomePage> {
                               begin: FractionalOffset(0.5, 1.0),
                               end: FractionalOffset(0.0, 0.0),
                               colors: [
-                                Colors.blue,
-                                Colors.blueAccent
+                                ColorC.principal,
+                                ColorC.principal
                               ]),
                               borderRadius: BorderRadius.circular(100.0)),
                             ),
@@ -251,8 +251,8 @@ class _HomePageState extends State<HomePage> {
                               begin: FractionalOffset(0.5, 1.0),
                               end: FractionalOffset(0.0, 0.0),
                               colors: [
-                                Colors.blue,
-                                Colors.blueAccent
+                                ColorC.principal,
+                                ColorC.principal
                               ]),
                               borderRadius: BorderRadius.circular(100.0)),
                             ),
@@ -290,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                   FlatButton(
                   shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                  color: Colors.blueAccent,
+                  color: ColorC.principal,
                   child: Text("Cerrar sesión",
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {
