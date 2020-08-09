@@ -35,7 +35,7 @@ class InputField extends StatelessWidget {
                   )
                 ),
                 child: ListTile(
-                  leading: Icon(this.leading),
+                  leading: (this.leading != null) ? Icon(this.leading) : null,
                   title: TextField(
                     controller: this.editingController,
                     cursorColor: Colors.blueAccent,
@@ -56,13 +56,7 @@ class InputField extends StatelessWidget {
 }
 
 class InputController{
-  bool isError;
-  String errorText;
-  TextEditingController editingController;
-
-  InputController(
-      {@required this.isError,
-      @required this.editingController,
-      @required this.errorText});
-
+  bool isError = false;
+  String errorText = "";
+  TextEditingController editingController = new TextEditingController();
 }

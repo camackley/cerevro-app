@@ -1,17 +1,24 @@
-import 'package:cerevro_app/src/pages/CreatePage.dart';
 import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
 import 'package:cerevro_app/src/pages/SplashPage.dart';
 import 'package:cerevro_app/src/pages/WebViewPage.dart';
-import 'package:cerevro_app/src/utils/Preferences.dart';
+import 'package:cerevro_app/src/utils/user_preferences.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cerevro_app/src/pages/HomePage.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
+import 'package:cerevro_app/src/pages/CreateUserPage.dart';
+import 'package:cerevro_app/src/pages/HomePage.dart';
+
+import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
+
  
-void main() => runApp(MyApp());
+void main(){
+  runApp(MyApp());
+}
  
 class MyApp extends StatelessWidget {
-  final preferences = UserPreferences();
+  
+  final preferences = new UserPreferences();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,14 +29,20 @@ class MyApp extends StatelessWidget {
               fontFamily: 'VagRoundedStd'
       ),
       title: 'Cerevro',
-      home: LoginPage(),
+      home: _homeState(),
       routes: <String, WidgetBuilder>{
         HomePage.tag: (context)=>HomePage(),
         LoginPage.tag: (context) =>LoginPage(),
-        CreatePage.tag: (context)=>CreatePage(),
+        CreateUserPage.tag: (context) => CreateUserPage(),
         ExperiencePage.tag: (context)=>ExperiencePage(),
         WebViewPage.tag: (context)=>WebViewPage(),
+        WelcomeScrollpage.tag: (context) => WelcomeScrollpage(),
       },
     );
+  }
+
+  Widget _homeState(){
+    preferences.initPrefs();
+    return SplashPage();
   }
 }

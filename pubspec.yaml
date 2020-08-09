@@ -29,12 +29,12 @@ dependencies:
   cloud_firestore: ^0.13.4+2
   firebase_auth: ^0.15.3+1
   toast: ^0.1.5
-  shared_preferences: ^0.5.3+4
   cached_network_image:
   uuid: 2.1.0
-  #stripe_native:
+  shared_preferences: ^0.5.3+4
   flutter_webview_plugin: ^0.3.11
   url_launcher: ^5.4.11
+  modal_progress_hud: ^0.1.2
 
 dev_dependencies:
   flutter_test:
@@ -43,10 +43,10 @@ dev_dependencies:
   flutter_launcher_icons:
 #flutter pub run flutter_launcher_icons:main
 flutter_icons:
-  android: "launcher_icon"
+  android: "splash_image"
   ios: true
-  image_path: "assets/logo_fondo.png"
-  adaptive_icon_background: "assets/logo_fondo.png"
+  image_path: "assets/img/logo-vertical.webp"
+  adaptive_icon_background: "assets/img/logo-vertical.webp"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

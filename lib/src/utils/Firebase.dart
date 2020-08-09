@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseUtils{
   FirebaseUtils._privateConstructor();
   static final FirebaseUtils _instance = FirebaseUtils._privateConstructor();
+  
   factory FirebaseUtils(){
     return _instance;
   }
@@ -20,10 +21,27 @@ class FirebaseUtils{
     return  doc.documentID;
   }
 
-  void read(String collection){
-    _firestoreInstance.collection(collection).getDocuments().then((querySnapshot) {
-        return querySnapshot;
-    });
+  void read(String collection, [Map where]){
+    if(where!=null){
+      switch(where["condition"]){
+        
+        case "==":
+        _firestoreInstance
+          .collection(collection)
+          .where(where["field"], isEqualTo: where["value"]);
+        break;
+
+        case ">":
+        /* _firestoreInstance
+          .collection(collection)
+          .where(where["field"],  : where["value"]); */
+      }
+      
+    }else{
+      _firestoreInstance.collection(collection).getDocuments().then((querySnapshot) {
+          return querySnapshot;
+      });
+    }
   }
 
   void update(String collection, dynamic data) async {

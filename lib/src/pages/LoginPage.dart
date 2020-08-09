@@ -1,8 +1,6 @@
 import 'package:cerevro_app/src/components/CerevroButton.dart';
-import 'package:cerevro_app/src/pages/CreatePage.dart';
-import 'package:cerevro_app/src/utils/preferences.dart';
+import 'package:cerevro_app/src/pages/CreateUserPage.dart';
 import 'package:cerevro_app/src/pages/HomePage.dart';
-import 'package:cerevro_app/src/static/statics.dart';
 import 'package:cerevro_app/src/utils/Firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,19 +18,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final preferences = UserPreferences();
 
-  InputController emailController = new InputController(
-    editingController: new TextEditingController(),
-    isError: false,
-    errorText: "",
-  );
+  InputController emailController = new InputController();
 
-  InputController passwordController = new InputController(
-    editingController: new TextEditingController(),
-    isError: false,
-    errorText: "",
-  );
+  InputController passwordController = new InputController();
 
 
   bool _obscureText = true;
@@ -42,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
      return Scaffold(
-            backgroundColor: CerevroColors.prymary,
+            backgroundColor: Color.fromRGBO(14, 68, 123, 1.0),
             body:  Container (
               child: ListView(
                 shrinkWrap: true,
@@ -51,7 +40,10 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       SizedBox(height: size.height * 0.03),
-                      Image(image: AssetImage("assets/img/header-login.webp")),
+                      Hero(
+                        tag: "header-login.webp",
+                        child: Image(image: AssetImage("assets/img/header-login.webp"))
+                      ),
                       SizedBox(height: size.height * 0.05),
                       _getLoginForm(context, size),
                   ],
@@ -77,7 +69,8 @@ class _LoginPageState extends State<LoginPage> {
             width: size.width * 0.8,
             height: size.height * 0.08 ,
             child: Image(
-              image: AssetImage("assets/img/logo-vertical.webp"),),
+              image: AssetImage("assets/img/logo-horizontal.webp"),
+            ),
           ),
           Text("Ingresar", style: TextStyle(fontSize: 20),),
           Container(
@@ -111,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
             text: "Crear cuenta",
             color: Color.fromRGBO(25, 91, 145, 1),
             width: size.width * 0.9,
-            execute: () => _login(context)),
+            execute: () => Navigator.of(context).pushNamed(CreateUserPage.tag)),
         ],
       ),
     );
@@ -126,12 +119,12 @@ class _LoginPageState extends State<LoginPage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title, style: TextStyle(color:CerevroColors.accent)),
+            title: Text(title, style: TextStyle(color:Color.fromRGBO(244, 131, 25, 1))),
             content: Text(content),
             actions: <Widget>[
               FlatButton(
                 child: Text("Aceptar",
-                    style: TextStyle(color:CerevroColors.accent)),
+                    style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1))),
                 onPressed: () => Navigator.of(context).pop(),
               )
             ],
@@ -150,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title, style: TextStyle(color:CerevroColors.prymary)),
+            title: Text(title, style: TextStyle(color: Color.fromRGBO(25, 91, 145, 1))),
             content: Container(
               height: 88,
               child: Column(
@@ -170,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
             actions: <Widget>[
               FlatButton(
                 child: Text("Aceptar",
-                    style: TextStyle(color:CerevroColors.accent)),
+                    style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1))),
                 onPressed: ((){
                   if(_validateStr(emailController.editingController.text, 0)){
                   FirebaseUtils().resetPassword(emailController.editingController.text);

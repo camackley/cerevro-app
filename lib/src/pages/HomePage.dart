@@ -3,7 +3,6 @@ import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/models/Topic.dart';
 import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
-import 'package:cerevro_app/src/static/statics.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,21 +21,21 @@ class _HomePageState extends State<HomePage> {
   List<Topic> topics = new List<Topic>();
 
   _HomePageState(){
-    _getTopics();
+    /* _getTopics(); */
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(elevation: 0, backgroundColor: Colors.white, title: Text(Texts.tilte, style: TextStyle(fontSize: 35, color: CerevroColors.accent),),
+      appBar: AppBar(elevation: 0, backgroundColor: Colors.white, title: Text("Hola", style: TextStyle(fontSize: 35, color: Colors.orange),),
        actions: [
          GestureDetector(
-           child: Icon(Icons.more_vert, color: CerevroColors.accent, size: 25.0,),
+           child: Icon(Icons.more_vert, color: Colors.orange, size: 25.0,),
            onTap: () => _showOptions(context),
          )
        ],),
-      body: _body(context),
+      body: Container(),
     );
   }
 
@@ -47,7 +46,7 @@ class _HomePageState extends State<HomePage> {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(
-                backgroundColor: CerevroColors.accent),
+                backgroundColor: Colors.orange),
           );
         } else {
           return Container(
@@ -78,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                               imageUrl: topics[index].image,
                               placeholder: (context, url) => Center(
                                 child: new CircularProgressIndicator(
-                                  backgroundColor: CerevroColors.accent,
+                                  backgroundColor: Colors.orange,
                                 ),
                               ),
                               fit: BoxFit.cover,
@@ -129,7 +128,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               margin: EdgeInsets.only(left: 20),
-              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:CerevroColors.accent), textAlign: TextAlign.start)),
+              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:Colors.orange), textAlign: TextAlign.start)),
             Flexible(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -174,8 +173,8 @@ class _HomePageState extends State<HomePage> {
                               begin: FractionalOffset(0.5, 1.0),
                               end: FractionalOffset(0.0, 0.0),
                               colors: [
-                                CerevroColors.accent,
-                                CerevroColors.accent
+                                Colors.orange,
+                                Colors.orange
                               ]),
                               borderRadius: BorderRadius.circular(100.0)),
                             ),
@@ -206,7 +205,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               margin: EdgeInsets.only(left: 20),
-              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:CerevroColors.accent), textAlign: TextAlign.start)),
+              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:Colors.orange), textAlign: TextAlign.start)),
             Flexible(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -251,8 +250,8 @@ class _HomePageState extends State<HomePage> {
                               begin: FractionalOffset(0.5, 1.0),
                               end: FractionalOffset(0.0, 0.0),
                               colors: [
-                                CerevroColors.accent,
-                                CerevroColors.accent
+                                Colors.orange,
+                                Colors.orange
                               ]),
                               borderRadius: BorderRadius.circular(100.0)),
                             ),
@@ -282,7 +281,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 15.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            title: Text("Opciones", style: TextStyle(color: CerevroColors.accent)),
+            title: Text("Opciones", style: TextStyle(color: Colors.orange)),
             content: Container(
               height: 55,
               child: Column(
@@ -290,7 +289,7 @@ class _HomePageState extends State<HomePage> {
                   FlatButton(
                   shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                  color: CerevroColors.accent,
+                  color: Colors.orange,
                   child: Text("Cerrar sesión",
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {
@@ -313,7 +312,7 @@ class _HomePageState extends State<HomePage> {
 
   void _getTopics() {
     final _firestoreInstance = Firestore.instance;
-      respTopics=_firestoreInstance.collection(BD.topics).getDocuments();
+      respTopics=_firestoreInstance.collection("").getDocuments();
       respTopics.then((response) {
         for (var data in response.documents) {
          if (data != null) {

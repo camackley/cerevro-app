@@ -1,6 +1,7 @@
 import 'package:cerevro_app/src/pages/HomePage.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
-import 'package:cerevro_app/src/static/statics.dart';
+import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
+import 'package:cerevro_app/src/utils/user_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +15,25 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final preferences = new UserPreferences();
   @override
   initState() {
     FirebaseAuth.instance
         .currentUser()
-        .then((currentUser) => {
+        .then((currentUser) async {
               if (currentUser == null){
-                Navigator.pushReplacementNamed(context, LoginPage.tag)
+                if(preferences.isFirstTime) {
+                  preferences.isFirstTime = false;
+                  Navigator.pushNamed(context, WelcomeScrollpage.tag);
+                }else{
+                  await Future.delayed(const Duration(milliseconds: 400));
+                  Navigator.pushReplacementNamed(context, LoginPage.tag);                  
+                }
               }else{
                 Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                builder: (context) => HomePage()))
+                builder: (context) => HomePage()));
               }
             })
         .catchError((err) => print(err));
@@ -36,13 +44,12 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     /* _createDB(); */
     return Scaffold(
-      backgroundColor: CerevroColors.accent,
+      backgroundColor: Color.fromRGBO(25, 91, 145, 1),
       body: Center(
         child: Container(
-          child: Text("Bienvenido!", style: TextStyle(color: Colors.white, fontSize: 30.0),)
+          child: Text("Bienvenido!", style: TextStyle(color: Colors.white, fontSize: 40),),)
         )
-      )
-    );
+      );
   }
 
   void _createDB() {
