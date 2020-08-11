@@ -9,7 +9,7 @@ import 'package:toast/toast.dart';
 import './LoginPage.dart';
 
 /* Custom Widgets */
-import '../components/InputText.dart';
+import '../components/CerevroInputField.dart';
 
 class CreateUserPage extends StatefulWidget {
   static String tag = "ceate-user-page";
@@ -28,11 +28,11 @@ class _CreateUserPageState extends State<CreateUserPage> {
   bool _obscureText = true;
   IconData _obscureTextIcon = Icons.remove_red_eye;
 
-  InputController nameController = new InputController();
-  InputController emailController = new InputController();
-  InputController passwordController = new InputController();
-  InputController confirmPasswordController = new InputController();
-  InputController schoolCodePasswordController = new InputController();
+  CerevroInputInputController nameController = new CerevroInputInputController();
+  CerevroInputInputController emailController = new CerevroInputInputController();
+  CerevroInputInputController passwordController = new CerevroInputInputController();
+  CerevroInputInputController confirmPasswordController = new CerevroInputInputController();
+  CerevroInputInputController schoolCodePasswordController = new CerevroInputInputController();
   DropDownController gradeController = new DropDownController();
 
   List<DropdownMenuItem<Grade>> gradesDropdown = new List<DropdownMenuItem<Grade>>();
@@ -107,7 +107,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Nombre", style: TextStyle(fontSize: 17)),
-                      InputField(
+                      CerevroInputField(
                         editingController: nameController.editingController,
                         isError: nameController.isError,
                         textInputType: TextInputType.name,
@@ -124,7 +124,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                       Text("Coreo electronico", style: TextStyle(fontSize: 17)),
-                      InputField(
+                      CerevroInputField(
                         editingController: emailController.editingController,
                         isError: emailController.isError,
                         textInputType: TextInputType.emailAddress,
@@ -147,7 +147,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                       Text("Código de tu colegio", style: TextStyle(fontSize: 17)),
-                      InputField(
+                      CerevroInputField(
                         editingController: schoolCodePasswordController.editingController,
                         isError: schoolCodePasswordController.isError,
                         textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
@@ -349,7 +349,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
   
   }
 
-  Widget getPasswordField(InputController controller) {
+  Widget getPasswordField(CerevroInputInputController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

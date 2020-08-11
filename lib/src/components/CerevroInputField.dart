@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class InputField extends StatelessWidget {
+class CerevroInputField extends StatelessWidget {
 
-  InputField({
+  CerevroInputField({
     @required this.editingController,
     @required this.isError,
     @required this.textInputType,
@@ -55,7 +55,7 @@ class InputField extends StatelessWidget {
 
 }
 
-class InputController{
+class CerevroInputInputController{
   bool isError = false;
   String errorText = "";
   TextEditingController editingController = new TextEditingController();

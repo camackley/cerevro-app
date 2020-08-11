@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class Student {
 
   String avatarUrl;
-  String emial;
+  String email;
   String gradeId;
   String name;
   String schoolId;
   bool   state;
   String token;
 
-  User.fromDocumentSnapshot(DocumentSnapshot data) {
-    this.avatarUrl = data["avatarUrl"];
-    this.emial = data["emial"];
-    this.gradeId = data["gradeId"];
+  Student.fromDocumentSnapshot(DocumentSnapshot data) {
+    this.avatarUrl = data["avatar_url"];
+    this.email = data["email"];
+    this.gradeId = data["grade_id"];
     this.name = data["name"];
-    this.schoolId = data["schoolId"];
+    this.schoolId = data["school_id"];
     this.state = data["state"];
     this.token = data["token"];
   }

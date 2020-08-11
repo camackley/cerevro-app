@@ -1,13 +1,14 @@
 import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/pages/CreateUserPage.dart';
 import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
+import 'package:cerevro_app/src/providers/StudentProvider.dart';
 import 'package:cerevro_app/src/utils/Firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
 /* Custom Widgets */
-import '../components/InputText.dart';
+import '../components/CerevroInputField.dart';
 import '../components/CerevroButton.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,9 +20,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  InputController emailController = new InputController();
+  CerevroInputInputController emailController = new CerevroInputInputController();
 
-  InputController passwordController = new InputController();
+  CerevroInputInputController passwordController = new CerevroInputInputController();
 
 
   bool _obscureText = true;
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
           Text("Ingresar", style: TextStyle(fontSize: 20),),
           Container(
             margin: EdgeInsets.only(left: size.width * 0.05, right: size.width * 0.05, top: 20),
-            child: InputField(
+            child: CerevroInputField(
               editingController: emailController.editingController,
               isError: emailController.isError,
               textInputType: TextInputType.emailAddress,
@@ -227,8 +228,9 @@ class _LoginPageState extends State<LoginPage> {
   void signIn() async {
     try {
       final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-      await _firebaseAuth.signInWithEmailAndPassword(
+      final authResult = await _firebaseAuth.signInWithEmailAndPassword(
             email: emailController.editingController.text, password: passwordController.editingController.text);
+      StudentProvider().getCurrentStudent();
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>ManaggerPrincipalPages()), (_) => false);
     } catch (e) {
       Navigator.pop(context, 1);
