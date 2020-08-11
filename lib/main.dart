@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cerevro_app/src/pages/LoginPage.dart';
 import 'package:cerevro_app/src/pages/CreateUserPage.dart';
-import 'package:cerevro_app/src/pages/HomePage.dart';
+import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
 
 import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'Cerevro',
       home: _homeState(),
       routes: <String, WidgetBuilder>{
-        HomePage.tag: (context)=>HomePage(),
+        ManaggerPrincipalPages.tag: (context)=> ManaggerPrincipalPages(),
         LoginPage.tag: (context) =>LoginPage(),
         CreateUserPage.tag: (context) => CreateUserPage(),
         ExperiencePage.tag: (context)=>ExperiencePage(),

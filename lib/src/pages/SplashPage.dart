@@ -1,4 +1,4 @@
-import 'package:cerevro_app/src/pages/HomePage.dart';
+import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
 import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
 import 'package:cerevro_app/src/utils/user_preferences.dart';
@@ -33,7 +33,7 @@ class _SplashPageState extends State<SplashPage> {
                 Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                builder: (context) => HomePage()));
+                builder: (context) => ManaggerPrincipalPages()));
               }
             })
         .catchError((err) => print(err));

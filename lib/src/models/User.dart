@@ -1,20 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class User {
 
-  dynamic uid;
-  dynamic email;
-  dynamic age;
-  dynamic name;
-  dynamic phone;
-  dynamic topics;
+  String avatarUrl;
+  String emial;
+  String gradeId;
+  String name;
+  String schoolId;
+  bool   state;
+  String token;
 
-  User.fromJson(Map data) {
-    this.uid = data["uid"];
-    this.email = data["email"];
-    this.age=data["age"];
-    this.name=data["name"];
-    this.phone=data["phone"];
-    this.topics=data["topics"];
+  User.fromDocumentSnapshot(DocumentSnapshot data) {
+    this.avatarUrl = data["avatarUrl"];
+    this.emial = data["emial"];
+    this.gradeId = data["gradeId"];
+    this.name = data["name"];
+    this.schoolId = data["schoolId"];
+    this.state = data["state"];
+    this.token = data["token"];
   }
-
-  User(){}
 }

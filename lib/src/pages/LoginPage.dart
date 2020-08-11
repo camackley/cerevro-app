@@ -1,6 +1,6 @@
 import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/pages/CreateUserPage.dart';
-import 'package:cerevro_app/src/pages/HomePage.dart';
+import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
 import 'package:cerevro_app/src/utils/Firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -229,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
       final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
       await _firebaseAuth.signInWithEmailAndPassword(
             email: emailController.editingController.text, password: passwordController.editingController.text);
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>HomePage()), (_) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>ManaggerPrincipalPages()), (_) => false);
     } catch (e) {
       Navigator.pop(context, 1);
       print(e);

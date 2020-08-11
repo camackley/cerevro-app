@@ -1,5 +1,5 @@
 import 'package:cerevro_app/src/models/Grade.dart';
-import 'package:cerevro_app/src/pages/HomePage.dart';
+import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,17 +45,11 @@ class _CreateUserPageState extends State<CreateUserPage> {
       appBar: AppBar(
           leading: GestureDetector(child: Icon(Icons.arrow_back_ios), onTap:(()=>{Navigator.of(context).pop()})),
           title: Text("Crea tú usuario", style: TextStyle(fontSize: 25.0),), elevation: 0),
-      body: ModalProgressHUD(child: _getBody(context, size), inAsyncCall: _loading,),
-      /* bottomSheet: GestureDetector(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.15, vertical: 20),
-              child: Text("¿Ya tines cuenta? Ingresa ahora", 
-                      style: TextStyle(color: Color.fromRGBO(25, 91, 145, 1), fontSize: 17, fontWeight: FontWeight.bold),),
-            ),
-            onTap: () => {
-              Navigator.of(context).pushNamed(LoginPage.tag)
-            }
-          ), */
+      body: ModalProgressHUD(child: ListView(
+        children: [
+          _getBody(context, size),
+        ],
+      ), inAsyncCall: _loading,),
     );
   }
 
@@ -89,7 +83,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                           borderRadius: BorderRadius.circular(15)
                       ),
                       onPressed: () {
-                        if(_validate(_currentStep)){
+                        if(_validate(_currentStep) && _validate(_currentStep) != null){
                           onStepContinue();
                         }else{
                           setState(() {});
@@ -205,12 +199,24 @@ class _CreateUserPageState extends State<CreateUserPage> {
               ),
             ],
           ),          
+          SizedBox(height: size.height * 0.15,),
+          Divider(),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.15, vertical: 20),
+              child: Text("¿Ya tines cuenta? Ingresa ahora", 
+                      style: TextStyle(color: Color.fromRGBO(25, 91, 145, 1), fontSize: 17, fontWeight: FontWeight.bold),),
+            ),
+            onTap: () => {
+              Navigator.of(context).pushNamed(LoginPage.tag)
+            }
+          ),
         ],
       ),
     );
   }
 
-  bool _validate(int currentStep) {
+  _validate(int currentStep) {
 
     switch(currentStep){
       case 0:
@@ -288,15 +294,14 @@ class _CreateUserPageState extends State<CreateUserPage> {
                   _loading = false;
                   _currentStep = 2;
                 });
-                return false;
               }else{
                 _firestoreInstance
                   .collection("grade")
                   .where("school_id", isEqualTo: data.documents[0].documentID)
-                  .orderBy("name")
+                  .orderBy("name", descending: false)
+                  .limit(10)
                   .snapshots()
                   .listen((data) {
-                    gradesDropdown.clear();
                     data.documents.forEach((item) {
                       Grade grade = new Grade.fromJson(item);
                       DropdownMenuItem<Grade> gradeDropDown = new DropdownMenuItem<Grade>(
@@ -310,8 +315,13 @@ class _CreateUserPageState extends State<CreateUserPage> {
                       _loading = false;
                       _currentStep = 3;
                     });
+                  }).onError((e){
+                    setState(() {
+                      schoolCodePasswordController.isError = true;
+                      schoolCodePasswordController.errorText = "Error interno, porfavor intenta más tarde";
+                      _loading = false;
+                    });
                   });
-                return true;
               }
             }).onError((e){
               setState(() {
@@ -381,6 +391,9 @@ class _CreateUserPageState extends State<CreateUserPage> {
   }
 
   void _createUser() {
+    String _lastemail = "";
+    if(_lastemail!=emailController.editingController.text){
+      _lastemail=emailController.editingController.text;
     _authFirebaseIntance.createUserWithEmailAndPassword(
         email: emailController.editingController.text, 
         password: passwordController.editingController.text
@@ -401,7 +414,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
         .setData(data)
           .then((data) {
             Toast.show("Bienvenido a Cerevro...", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>HomePage()), (_) => false);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>ManaggerPrincipalPages()), (_) => false);
             setState(() {
               _loading=false;
             });
@@ -419,6 +432,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
         });
       }
     );
+  }
   }
 
 }

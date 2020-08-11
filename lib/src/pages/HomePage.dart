@@ -1,12 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cerevro_app/src/components/CerevroButton.dart';
-import 'package:cerevro_app/src/models/Topic.dart';
-import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
-import 'package:cerevro_app/src/pages/LoginPage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = "home-page";
@@ -16,310 +9,57 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
-  Future<dynamic> respTopics;
-  List<Topic> topics = new List<Topic>();
 
-  _HomePageState(){
-    /* _getTopics(); */
-  }
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(elevation: 0, backgroundColor: Colors.white, title: Text("Hola", style: TextStyle(fontSize: 35, color: Colors.orange),),
-       actions: [
-         GestureDetector(
-           child: Icon(Icons.more_vert, color: Colors.orange, size: 25.0,),
-           onTap: () => _showOptions(context),
-         )
-       ],),
-      body: Container(),
-    );
+    final size = MediaQuery.of(context).size;
+    return ModalProgressHUD(inAsyncCall: _loading, child: _body(context, size));
   }
 
-  Widget _body(BuildContext context) {
-    return FutureBuilder(
-      future: respTopics,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(
-                backgroundColor: Colors.orange),
-          );
-        } else {
-          return Container(
-            width: double.infinity,
-            child:  Column(
+    Widget _body(BuildContext context, Size size) {
+    
+    return Container(
+      height: double.infinity,
+      width: size.width,
+      decoration: BoxDecoration(  
+        color: Colors.white,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight:  Radius.circular(15.0))
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 30,),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Row(
               children: [
-                _swiper(context),
-                _new(context),
-                _moreSelected(context),
+                _categoryCard(Colors.amberAccent, "assets/icons/positive-charges.svg", "Hola", "cotegory", size),
+                SizedBox(width: size.width * 0.1,),
+                _categoryCard(Colors.amberAccent, "assets/icons/positive-charges.svg", "Hola", "cotegory", size),
               ],
             ),
-          );
-        }});
-  }
-
-  Widget _swiper(BuildContext context) {
-    return Container(
-      height: 200,
-      width: double.infinity,
-      child: Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                 return Card(
-                    child: Stack(
-                      fit: StackFit.expand,
-                      alignment: Alignment.center,
-                      children: [
-                        CachedNetworkImage(
-                              imageUrl: topics[index].image,
-                              placeholder: (context, url) => Center(
-                                child: new CircularProgressIndicator(
-                                  backgroundColor: Colors.orange,
-                                ),
-                              ),
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, error) => new Icon(Icons.error),
-                        ),
-                        Container(
-                          color: Color.fromRGBO(0, 0, 0, 0.4)
-                        ),
-                        Column(
-                        mainAxisAlignment :MainAxisAlignment.center,
-                        children: [
-                        Container(
-                          child: Text(topics[index].title, style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold))
-                        ),
-                        Container(
-                          width: 200,
-                          child: Text(topics[index].resume, style: TextStyle(color: Colors.white, fontSize: 12,), textAlign: TextAlign.center,)
-                        ),
-                        /* FlatButton(
-                          child: Buton(text: "Ver ahora", width: 150, height: 30),
-                          onPressed: () => {
-                            Navigator.of(context).pushNamed(ExperiencePage.tag, arguments: topics[index])
-                          },
-                        ) */
-                        ],)
-                      ],
-                    ),    
-                  );
-              },
-              itemCount: 1,
-              control: SwiperControl(
-                iconNext: null,
-                iconPrevious: null,
-              ),
-              duration: 3,
-              autoplay: true,
+          )
+        ],
       )
     );
   }
 
-  Widget _new(BuildContext context) {
-    return Container(
-      height: 200,
-      margin: EdgeInsets.only(top: 20),
-      alignment: Alignment.centerLeft,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:Colors.orange), textAlign: TextAlign.start)),
-            Flexible(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: topics.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    width: 250,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                      color: Colors.black,
-                      child: Stack(
-                      fit: StackFit.expand,
-                      alignment: Alignment.center,
-                      children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(topics[index].image),
-                          ),
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 0, 0, 0.4),
-                            borderRadius: BorderRadius.circular(15) ),
-                        ),
-                      Container(
-                          margin: EdgeInsets.only(top: 125, left: 10),
-                          child: Text(topics[index].title, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))
-                        ),
-                      Center(
-                          child: FlatButton(
-                            child: Container(
-                              height: 30,
-                              width: 30,
-                              child: Icon(Icons.play_arrow,color: Colors.white),
-                              decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                              begin: FractionalOffset(0.5, 1.0),
-                              end: FractionalOffset(0.0, 0.0),
-                              colors: [
-                                Colors.orange,
-                                Colors.orange
-                              ]),
-                              borderRadius: BorderRadius.circular(100.0)),
-                            ),
-                            onPressed: () => {
-                              Navigator.of(context).pushNamed(ExperiencePage.tag, arguments: topics[index])
-                            },
-                          ),
-                        )
-                      ]
-                    ),  
-                    ),
-                  );
-           },
-          ),
-            ),
-          ],
-      )
+  Widget _categoryCard(Color color, String assetsImage, String title, String category, Size size) {
+    return GestureDetector(
+          child: Container(
+        decoration: BoxDecoration(
+          color: Colors.amberAccent,
+          borderRadius: BorderRadius.all(Radius.circular(15.0),)
+        ),
+        height: size.height * 0.08,
+        width: size.width * 0.4,
+        child: ListTile(
+          /* leading: SvgPicture.string(assetsImage), */
+          title: Text(title, style: TextStyle(fontSize: 25, color: Colors.white)),
+        ),
+      ),
+      onTap: () => {print("Tap..")},
     );
-  }
-
-  Widget _moreSelected(BuildContext context){
-   return Container(
-      height: 200,
-      margin: EdgeInsets.only(top: 20),
-      alignment: Alignment.centerLeft,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Text("Nuevos", style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color:Colors.orange), textAlign: TextAlign.start)),
-            Flexible(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: topics.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    width: 250,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                      color: Colors.black,
-                      child: Stack(
-                      fit: StackFit.expand,
-                      alignment: Alignment.center,
-                      children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(topics[index].image),
-                          ),
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 0, 0, 0.4),
-                            borderRadius: BorderRadius.circular(15) ),
-                        ),
-                      Container(
-                          margin: EdgeInsets.only(top: 125, left: 10),
-                          child: Text(topics[index].title, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))
-                        ),
-                      Center(
-                          child: FlatButton(
-                            child: Container(
-                              height: 30,
-                              width: 30,
-                              child: Icon(Icons.play_arrow,color: Colors.white),
-                              decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                              begin: FractionalOffset(0.5, 1.0),
-                              end: FractionalOffset(0.0, 0.0),
-                              colors: [
-                                Colors.orange,
-                                Colors.orange
-                              ]),
-                              borderRadius: BorderRadius.circular(100.0)),
-                            ),
-                            onPressed: () => {
-                              Navigator.of(context).pushNamed(ExperiencePage.tag, arguments: topics[index])
-                            },
-                          ),
-                        )
-                      ]
-                    ),  
-                    ),
-                  );
-           },
-          ),
-            ),
-          ],
-      )
-    );
-  }
-
-  Widget _showOptions(BuildContext context) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            elevation: 15.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text("Opciones", style: TextStyle(color: Colors.orange)),
-            content: Container(
-              height: 55,
-              child: Column(
-                children: [         
-                  FlatButton(
-                  shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                  color: Colors.orange,
-                  child: Text("Cerrar sesión",
-                      style: TextStyle(color: Colors.white)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _signOut(context);
-                  },
-                )],
-              ),
-            ),
-          );
-        });
-
-    return Container();
-  }
-
-  Future _signOut(BuildContext context)  async{
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>LoginPage()), (_) => false);
-  }
-
-  void _getTopics() {
-    final _firestoreInstance = Firestore.instance;
-      respTopics=_firestoreInstance.collection("").getDocuments();
-      respTopics.then((response) {
-        for (var data in response.documents) {
-         if (data != null) {
-          Topic topic = new Topic.fromJson(data.data);
-          topics.add(topic);
-        }
-      }
-    });
   }
 }
