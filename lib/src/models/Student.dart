@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Student {
 
+  String uid;
   String avatarUrl;
   String email;
   String gradeId;
@@ -11,6 +12,7 @@ class Student {
   String token;
 
   Student.fromDocumentSnapshot(DocumentSnapshot data) {
+    this.uid = data.documentID;
     this.avatarUrl = data["avatar_url"];
     this.email = data["email"];
     this.gradeId = data["grade_id"];

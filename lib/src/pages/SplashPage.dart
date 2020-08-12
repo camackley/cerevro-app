@@ -59,7 +59,7 @@ class _SplashPageState extends State<SplashPage> {
     var experiences = [
       {
        "creation_date": DateTime.now().millisecondsSinceEpoch,
-       "duration": "30:00",
+       "duration": "31:00",
        "likes": 0,
        "miniature": "",
        "name": "Conozcamos roma",
@@ -86,8 +86,8 @@ class _SplashPageState extends State<SplashPage> {
       },
     ];
 
-    experiences.map((e) {  
-      _firestoreInstance.collection("experiences").document().setData(e);
+    experiences.map((e) => {  
+      _firestoreInstance.collection("experiences").document().setData(e)
     });
   }
 }
