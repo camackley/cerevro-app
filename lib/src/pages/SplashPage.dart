@@ -1,13 +1,13 @@
-import 'package:cerevro_app/src/models/Experience.dart';
-import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
-import 'package:cerevro_app/src/pages/LoginPage.dart';
-import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
-import 'package:cerevro_app/src/providers/StudentProvider.dart';
-import 'package:cerevro_app/src/utils/user_preferences.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+
+import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
+import 'package:cerevro_app/src/pages/LoginPage.dart';
+import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
+import 'package:cerevro_app/src/providers/Provider.dart';
+import 'package:cerevro_app/src/utils/user_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key key}) : super(key: key);
@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
                   preferences.isFirstTime = false;
                   Navigator.pushNamed(context, WelcomeScrollpage.tag);
                 }else{
-                  StudentProvider().getCurrentStudent();
+                  Provider().getCurrentStudent();
                   Navigator.pushReplacementNamed(context, LoginPage.tag);                  
                 }
               }else{

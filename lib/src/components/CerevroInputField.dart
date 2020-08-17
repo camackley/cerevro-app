@@ -9,7 +9,8 @@ class CerevroInputField extends StatelessWidget {
     @required this.textInputType,
     this.hintText,
     this.leading,
-    this.errorText
+    this.errorText,
+    this.onChange
   });
 
   final TextEditingController editingController;
@@ -19,6 +20,8 @@ class CerevroInputField extends StatelessWidget {
   final String hintText;
   final IconData leading;
   final String errorText;
+
+  final Function(String) onChange;
 
 
   @override
@@ -44,6 +47,7 @@ class CerevroInputField extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: this.hintText,
                         focusColor: Colors.blueAccent),
+                    onChanged: (this.onChange != null) ?  this.onChange : null,
                   ),
                   trailing: (this.isError) ? Icon(Icons.cancel, color: Colors.red) : SizedBox(),
                 )

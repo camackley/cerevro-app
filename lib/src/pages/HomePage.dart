@@ -1,14 +1,12 @@
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'package:cerevro_app/src/components/CerevroCard.dart';
 import 'package:cerevro_app/src/models/Experience.dart';
 import 'package:cerevro_app/src/models/Student.dart';
-import 'package:cerevro_app/src/providers/StudentProvider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cerevro_app/src/providers/Provider.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = "home-page";
@@ -19,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final studentProvider  = new StudentProvider();
+  final provider  = new Provider();
   List<Experience> experiencesNew = new List<Experience>();
 
   bool _loading = true;
@@ -34,13 +32,13 @@ class _HomePageState extends State<HomePage> {
 
     return ModalProgressHUD(
             inAsyncCall: _loading,
-            child: _body(context, size));
+            child: SafeArea(child: _body(context, size)));
   }
 
   Widget _body(BuildContext context, Size size) {
-    studentProvider.getCurrentStudent();
+    provider.getCurrentStudent();
     return StreamBuilder(
-      stream: studentProvider.studentStream,
+      stream: provider.studentStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if(!snapshot.hasData){
           return Container(
@@ -50,7 +48,7 @@ class _HomePageState extends State<HomePage> {
           );
         }else{
           return  Container(
-            color: Color.fromRGBO(14, 68, 123, 1.0),
+            color: Color.fromRGBO(3, 58, 102, 1),
             child: Column(
                 children: [
                   _getAppBar(snapshot.data),
@@ -161,7 +159,7 @@ class _HomePageState extends State<HomePage> {
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index){
-            return CerevroCard(experience: experiencesNew[index], size: size);
+            return CerevroCard(experience: experiencesNew[index], cardWidth: size.width * 0.8);
           },
           itemCount: experiencesNew.length,
         )

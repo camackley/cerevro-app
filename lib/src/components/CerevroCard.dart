@@ -1,18 +1,20 @@
-import 'package:cerevro_app/src/models/Experience.dart';
-import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:cerevro_app/src/models/Experience.dart';
+import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
+import 'package:cerevro_app/src/providers/Provider.dart';
 
 // ignore: must_be_immutable
 class CerevroCard extends StatefulWidget{
 
   Experience experience;
-  Size size;
+  double cardWidth;
 
   CerevroCard({
     @required this.experience,
-    @required this.size
+    @required this.cardWidth
   });
 
   @override
@@ -20,6 +22,8 @@ class CerevroCard extends StatefulWidget{
 }
 
 class _CerevroCardState extends State<CerevroCard> {
+  final provider  = new Provider();
+
   @override
   Widget build(BuildContext context) {
     String differenteTime = _getDifferentTime( widget.experience.creationDate.toDate());
@@ -31,14 +35,14 @@ class _CerevroCardState extends State<CerevroCard> {
           borderRadius: BorderRadius.circular(15.0)
         ),
         child: Container(
-          width: widget.size.width * 0.8,
+          width: widget.cardWidth,
           child: Column(
             children: [
               FadeInImage(
                 placeholder: AssetImage("assets/gif/loading.gif"),
                 image: NetworkImage(widget.experience.miniature),
                 fadeInDuration: Duration(milliseconds: 200),
-                width: widget.size.width * 0.8,
+                width: 600,
                 height: 100,
                 fit: BoxFit.cover
               ),

@@ -1,16 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cerevro_app/library/BottomNavyBar.dart';
 import 'package:cerevro_app/src/components/CerevroInputField.dart';
 import 'package:cerevro_app/src/models/Topic.dart';
-import 'package:cerevro_app/src/models/Student.dart';
-import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
-import 'package:cerevro_app/src/providers/StudentProvider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cerevro_app/src/pages/SearchPage.dart';
+import 'package:cerevro_app/src/providers/Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:toast/toast.dart';
 
 import 'HomePage.dart';
 
@@ -29,7 +24,7 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
   PageController _pageController;
   int _selectIndex = 0;
 
-  final studentProvider = new StudentProvider();
+  final studentProvider = new Provider();
 
   CerevroInputInputController searchController = CerevroInputInputController();
 
@@ -53,7 +48,7 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
         controller: _pageController,
         children: [
           HomePage(),
-          Container(),
+          SearchPage(),
           Container(),
         ],
         onPageChanged: (index) {

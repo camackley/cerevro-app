@@ -1,7 +1,7 @@
 import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/pages/CreateUserPage.dart';
 import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
-import 'package:cerevro_app/src/providers/StudentProvider.dart';
+import 'package:cerevro_app/src/providers/Provider.dart';
 import 'package:cerevro_app/src/utils/Firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-   Widget  _getLoginForm(context, size) {
+  Widget  _getLoginForm(context, size) {
     return Container(
       height: size.height * 0.6,
       width: size.width,
@@ -228,9 +228,9 @@ class _LoginPageState extends State<LoginPage> {
   void signIn() async {
     try {
       final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-      final authResult = await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
             email: emailController.editingController.text, password: passwordController.editingController.text);
-      StudentProvider().getCurrentStudent();
+      Provider().getCurrentStudent();
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>ManaggerPrincipalPages()), (_) => false);
     } catch (e) {
       Navigator.pop(context, 1);
