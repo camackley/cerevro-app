@@ -45,11 +45,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
       appBar: AppBar(
           leading: GestureDetector(child: Icon(Icons.arrow_back_ios), onTap:(()=>{Navigator.of(context).pop()})),
           title: Text("Crea tú usuario", style: TextStyle(fontSize: 25.0),), elevation: 0),
-      body: ModalProgressHUD(child: ListView(
-        children: [
-          _getBody(context, size),
-        ],
-      ), inAsyncCall: _loading,),
+      body: ModalProgressHUD(child: _getBody(context, size)
+      , inAsyncCall: _loading,),
     );
   }
 

@@ -10,6 +10,8 @@ class Student {
   String schoolId;
   bool   state;
   String token;
+  String gradeName;
+  int totalPoints;
 
   Student.fromDocumentSnapshot(DocumentSnapshot data) {
     this.uid = data.documentID;
@@ -20,5 +22,6 @@ class Student {
     this.schoolId = data["school_id"];
     this.state = data["state"];
     this.token = data["token"];
+    this.totalPoints = data["total_points"];
   }
 }

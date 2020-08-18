@@ -26,3 +26,17 @@ class Experience {
     this.views =data["views"];
   }
 }
+
+class ResumeExperience{
+
+  String title;
+  Timestamp date;
+  int points;
+
+  ResumeExperience.fromDocumentSnapshot(DocumentSnapshot data){
+    this.title = data["title"];
+    this.date = data["date"];
+    this.points = data["points"];
+  }
+
+}

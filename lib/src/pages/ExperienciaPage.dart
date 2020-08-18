@@ -69,8 +69,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 backgroundColor: Colors.transparent,
               ),
             ),
-            GestureDetector(
-              child: Column(
+            Column(
                 children: [
                   SizedBox(height: size.height * 0.35,),
                   Container(
@@ -130,7 +129,6 @@ class _ExperiencePageState extends State<ExperiencePage> {
                   ),
                 ],
               ),
-            )
           ],
         ),
       )

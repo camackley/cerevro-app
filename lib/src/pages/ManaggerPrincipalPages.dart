@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
+
 import 'package:cerevro_app/library/BottomNavyBar.dart';
+
 import 'package:cerevro_app/src/components/CerevroInputField.dart';
 import 'package:cerevro_app/src/models/Topic.dart';
-import 'package:cerevro_app/src/pages/LoginPage.dart';
+import 'package:cerevro_app/src/pages/ProfilePage.dart';
 import 'package:cerevro_app/src/pages/SearchPage.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 import 'HomePage.dart';
 
@@ -49,7 +50,7 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
         children: [
           HomePage(),
           SearchPage(),
-          Container(),
+          ProfilePage(),
         ],
         onPageChanged: (index) {
           setState(() => _selectIndex = index);
@@ -91,11 +92,6 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
                   duration: Duration(milliseconds: 300), curve: Curves.ease);
       })
     );
-  }
-
-  Future _signOut(BuildContext context)  async{
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>LoginPage()), (_) => false);
   }
 
 }

@@ -32,7 +32,6 @@ dependencies:
   modal_progress_hud: ^0.1.2
   flutter_svg_provider: ^0.1.5
   google_fonts: ^1.1.0
-  sliding_up_panel: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -43,8 +42,8 @@ dev_dependencies:
 flutter_icons:
   android: "splash_image"
   ios: true
-  image_path: "assets/img/logo-vertical.webp"
-  adaptive_icon_background: "assets/img/logo-vertical.webp"
+  image_path: "assets/img/logo_fondo.png"
+  adaptive_icon_background: "assets/img/logo_fondo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
