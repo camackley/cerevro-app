@@ -26,6 +26,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    var category = ModalRoute.of(context).settings.arguments;
+    (category!=null) ? topicQuery.add(category) : category ="";
+
     return SafeArea(
         child: Container(
           color: Color.fromRGBO(3, 58, 102, 1),
@@ -84,12 +87,11 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _getResults(BuildContext context, Size size) {
-    _search("");
-    searchController.editingController.text = "";
     return StreamBuilder(
       stream: provider.searchExperienceStream,
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if(!snapshot.hasData){
+          _search("");
           return Center(
             child: CircularProgressIndicator(
               backgroundColor: Color.fromRGBO(3, 58, 102, 1),
@@ -110,8 +112,9 @@ class _SearchPageState extends State<SearchPage> {
                       text: "Enviar sugerencia", 
                       color: Color.fromRGBO(244, 131, 25, 1),
                       width: size.width * 0.7,
-                      execute: () => {print("todo")}
-                      //TODO: hacer logica pra enviar sugerencias
+                      execute: () {
+                        provider.sentToWpp(searchController.editingController.text, context);
+                      }
                     )
                   ],
                 )
@@ -274,6 +277,7 @@ class _SearchPageState extends State<SearchPage> {
                         onTap: (){
                           topicQuery.clear();
                           orderQuery.clear();
+                          _search(searchController.editingController.text);
                           setState(() {});
                         },
                       ),
@@ -283,6 +287,9 @@ class _SearchPageState extends State<SearchPage> {
                         width: size.width * 0.35,
                         execute: (){  
                           _search(searchController.editingController.text, orderQuery, topicQuery);
+                          setState(() {
+                            _showFilter = false;
+                          });
                         }
                       )
                     ],

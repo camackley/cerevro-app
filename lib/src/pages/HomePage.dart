@@ -98,13 +98,16 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       actions: [
-        Padding(
+        //TODO: Hacer logica de notificaciones
+        /* Padding(
           padding: const EdgeInsets.only(right: 10.0),
           child: GestureDetector(
             child: Icon(Icons.notifications, color: Colors.white, size: 30.0,),
-            onTap: () => print("Hola..."),
+            onTap: () {
+
+            },
             ),
-          )
+          ) */
         ],
       );
   }
@@ -148,7 +151,9 @@ class _HomePageState extends State<HomePage> {
           title: Text(title, style: TextStyle(fontSize: 16, color: Colors.white)),
         ),
       ),
-      onTap: () => {print("Query: $title")},
+      onTap: () {
+        //TODO: Hacer filtro login
+      },
     );
   }
 
@@ -177,7 +182,6 @@ class _HomePageState extends State<HomePage> {
           for(var item in collection.documents){
             Experience experience = new Experience.fromDocumentSnapshot(item);
             experiencesNew.add(experience);
-            print(experience.uid);
           }
           setState(() {
             _loading = false;

@@ -5,6 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cerevro_app/src/models/Learning.dart';
 import 'package:cerevro_app/src/models/Student.dart';
+import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Provider{
 
@@ -73,37 +76,35 @@ class Provider{
       });
   }
 
-  getSearch(List<String> searchh){
-    //TODO: Implementar filtros
-    List<Experience> searchhResult = new List<Experience>();
-    if(searchh[0].length > 0){
-      _firebaseintance
-      .collection('experiences')
-      .where("name_query", arrayContains: searchh[0])
+  getSearch(List<String> search){
+    List<Experience> searchResult = new List<Experience>();
+    dynamic firebaseQuery = _firebaseintance.collection('experiences');
+    if(search[2] != null) firebaseQuery = firebaseQuery.where("principal_tag", isEqualTo: search[2]);
+    if(search[1] !=null) firebaseQuery = firebaseQuery.orderBy(search[1]);
+
+    if(search[0].length > 0){
+      firebaseQuery
+      .where("name_query", arrayContains: search[0])
       .snapshots()
       .listen((event) {
-        searchhResult.clear();
+        searchResult.clear();
         for(DocumentSnapshot item in event.documents){
           Experience experience = new Experience.fromDocumentSnapshot(item);
-          searchhResult.add(experience);
+          searchResult.add(experience);
         }
-        searchExperiencegSink(searchhResult);
+        searchExperiencegSink(searchResult);
       });
     }else{
-      var firebaseQuery = _firebaseintance.collection('experiences');
-      if(searchh[2] != null) firebaseQuery = firebaseQuery.where("principal_tag", isEqualTo: searchh[2]);
-      if(searchh[1] !=null) firebaseQuery = firebaseQuery.orderBy(searchh[1]);
-      
       firebaseQuery
       .limit(10)
       .snapshots()
       .listen((event) {
-        searchhResult.clear();
+        searchResult.clear();
         for(DocumentSnapshot item in event.documents){
           Experience experience = new Experience.fromDocumentSnapshot(item);
-          searchhResult.add(experience);
+          searchResult.add(experience);
         }
-        searchExperiencegSink(searchhResult);
+        searchExperiencegSink(searchResult);
       });
     }
   }
@@ -126,4 +127,30 @@ class Provider{
       historyExperiencegSink(resume);
     });
   }
+
+  sentToWpp(String content, BuildContext context){
+    FirebaseAuth.instance
+        .currentUser()
+        .then((currentStudent) {
+          _firebaseintance
+            .collection("students")
+            .document(currentStudent.uid)
+            .snapshots()
+            .listen((data) {
+              Student student = Student.fromDocumentSnapshot(data);
+              String message = 'Hola! soy ${student.name} y tengo esta idea "$content" para una experiencia, hagamos algo increible 🚀';
+              String link = 
+                         'https://api.whatsapp.com/send?phone=573008480389&text=$message';              
+              lanzarUrl(link, context);
+            });
+        });
+  }
+
+  void lanzarUrl(String url, BuildContext context) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    Toast.show("Error al inciar el chat", context);
+  }
+}
 }

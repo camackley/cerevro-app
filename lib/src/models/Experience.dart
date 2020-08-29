@@ -12,6 +12,7 @@ class Experience {
   int       likes;
   int       views;
   Timestamp creationDate;
+  List<ExperienceArchive> archives;
 
   Experience.fromDocumentSnapshot(DocumentSnapshot data) {
     this.uid = data.documentID;
@@ -23,7 +24,30 @@ class Experience {
     this.principalTag = data["principal_tag"];
     this.likes =data["likes"];
     this.creationDate = data["creation_date"];
+    this.archives = _getArchive(data["archive"]);
     this.views =data["views"];
+  }
+
+  List<ExperienceArchive> _getArchive(Map data){
+    List<ExperienceArchive> experiencesArchive = new List<ExperienceArchive>();
+    
+    data.forEach((key, value) {
+      ExperienceArchive archive = new ExperienceArchive.fromMap(key, value);
+      experiencesArchive.add(archive);
+    });
+    
+    return experiencesArchive;
+  }
+
+}
+
+class ExperienceArchive{
+  String type;
+  String urlFile;
+
+  ExperienceArchive.fromMap(key, value){
+    this.type = key;
+    this.urlFile = value;
   }
 }
 

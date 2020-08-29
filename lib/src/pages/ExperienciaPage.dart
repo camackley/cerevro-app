@@ -1,12 +1,19 @@
+import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'package:cerevro_app/src/models/Experience.dart';
 import 'package:cerevro_app/src/models/Learning.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
+
+const debug = true;
 
 class ExperiencePage extends StatefulWidget {
   static String tag = "experience-page";
@@ -19,11 +26,18 @@ class _ExperiencePageState extends State<ExperiencePage> {
   
   IconData iconLike = Icons.favorite_border;
   List<Learning>  learnings = new List<Learning>();
+  
+  final _provider = Provider();
 
   bool _loading = false;
 
-  final _provider = Provider();
+  /* Download Task */
 
+  @override
+  void initState() {
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -43,23 +57,37 @@ class _ExperiencePageState extends State<ExperiencePage> {
                   height: size.height *0.4,
                   fit: BoxFit.cover
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: size.height * 0.1,
-                ),  
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(image: Svg(
-                            "assets/icons/play_experience.svg", 
-                            height: (size.height * 0.2).round(),
-                            width: (size.width * 0.3).round()), 
-                            color: Colors.white,
-                    )
-                  ],
-                ),
-              ],
+            GestureDetector(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: size.height * 0.1,
+                  ),  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(image: Svg(
+                              "assets/icons/play_experience.svg", 
+                              height: (size.height * 0.2).round(),
+                              width: (size.width * 0.3).round()), 
+                              color: Colors.white,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              onTap: (){
+                setState((){
+                  _loading = true;
+                });
+
+                if(Platform.isAndroid){
+                  _executeAndroidExperience(experience.archives[1].urlFile);
+                }else if(Platform.isIOS){
+                  print(experience.archives[0].type);
+                  print(experience.archives[0].urlFile);
+                }
+              }
             ),
             Container(
               height: size.height *0.1,
@@ -208,5 +236,9 @@ class _ExperiencePageState extends State<ExperiencePage> {
       int meses =(now.difference(creatioDate).inDays / 30).round();
       return "Hace ${(meses / 12).round()} años";
     }
+  }
+
+  _executeAndroidExperience(urlFile) async {
+    
   }
 }
