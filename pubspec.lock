@@ -35,16 +35,6 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "2.2.0+1"
-  characters:
-    dependency: transitive
-    description:
-      name: characters
-      url: "https://pub.dartlang.org"
-    source: hosted
-=======
->>>>>>> desarrollo
     version: "1.0.0"
   charcode:
     dependency: transitive
@@ -537,8 +527,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.9.0-14.0.dev <3.0.0"
-<<<<<<< HEAD
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
-=======
   flutter: ">=1.18.0-6.0.pre <2.0.0"
->>>>>>> desarrollo
