@@ -66,11 +66,11 @@ class _CerevroCardState extends State<CerevroCard> {
   String _getDifferentTime(var creatioDate){
     final now = DateTime.now();
     if(now.difference(creatioDate).inHours < 24){
-      return "hace ${now.difference(creatioDate).inHours} horas";
+      return "hace ${(now.difference(creatioDate).inHours).toInt()} horas";
     }else if(now.difference(creatioDate).inDays>30 && now.difference(creatioDate).inDays<360){
-        return "hace ${now.difference(creatioDate).inDays / 30} meses";
+        return "hace ${now.difference(creatioDate).inDays ~/ 30} meses";
     }else if(now.difference(creatioDate).inDays<30){
-      return "hace ${now.difference(creatioDate).inDays} dias";
+      return "hace ${(now.difference(creatioDate).inDays).toInt()} dias";
     }else{
       int meses =(now.difference(creatioDate).inDays / 30).round();
       return "Hace ${(meses / 12).round()} años";

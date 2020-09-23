@@ -54,8 +54,8 @@ class ExperienceArchive{
 class ResumeExperience{
 
   String title;
-  Timestamp date;
   int points;
+  Timestamp date;
 
   ResumeExperience.fromDocumentSnapshot(DocumentSnapshot data){
     this.title = data["title"];

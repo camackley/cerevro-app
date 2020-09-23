@@ -151,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment : CrossAxisAlignment.center,
               children: [
                 SizedBox(height: size.height * 0.6),
-                Text("Aú no has participado en ninguna experiencia, prueba una hora 🥽")
+                Text("Aún no has participado en ninguna experiencia, prueba una hora 🥽")
               ],
             ),
           );

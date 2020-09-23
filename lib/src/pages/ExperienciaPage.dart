@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'package:cerevro_app/src/models/Experience.dart';
 import 'package:cerevro_app/src/models/Learning.dart';
@@ -227,11 +225,11 @@ class _ExperiencePageState extends State<ExperiencePage> {
   String _getDifferentTime(var creatioDate){
     final now = DateTime.now();
     if(now.difference(creatioDate).inHours < 24){
-      return "hace ${now.difference(creatioDate).inHours} horas";
+      return "hace ${(now.difference(creatioDate).inHours).toInt()} horas";
     }else if(now.difference(creatioDate).inDays>30 && now.difference(creatioDate).inDays<360){
-        return "hace ${now.difference(creatioDate).inDays / 30} meses";
+        return "hace ${now.difference(creatioDate).inDays ~/ 30} meses";
     }else if(now.difference(creatioDate).inDays<30){
-      return "hace ${now.difference(creatioDate).inDays} dias";
+      return "hace ${(now.difference(creatioDate).inDays).toInt()} dias";
     }else{
       int meses =(now.difference(creatioDate).inDays / 30).round();
       return "Hace ${(meses / 12).round()} años";
