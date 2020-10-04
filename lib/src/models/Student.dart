@@ -22,6 +22,6 @@ class Student {
     this.schoolId = data["school_id"];
     this.state = data["state"];
     this.token = data["token"];
-    this.totalPoints = data["total_points"];
+    this.totalPoints = 1350;
   }
 }

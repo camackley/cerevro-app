@@ -1,13 +1,14 @@
 import 'dart:async';
-import 'package:cerevro_app/src/models/Experience.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:cerevro_app/src/models/Learning.dart';
-import 'package:cerevro_app/src/models/Student.dart';
-import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cerevro_app/src/models/Experience.dart';
+
+import 'package:cerevro_app/src/models/Student.dart';
+import 'package:cerevro_app/src/models/Learning.dart';
+import 'package:cerevro_app/src/providers/Network.dart' as red;
 
 class Provider{
 
@@ -41,7 +42,7 @@ class Provider{
     _historyExperienceStream?.close();
   }
 
-  getCurrentStudent(){
+  getCurrentStudent() async {
      FirebaseAuth.instance
         .currentUser()
         .then((currentStudent) {
@@ -49,8 +50,15 @@ class Provider{
             .collection("students")
             .document(currentStudent.uid)
             .snapshots()
-            .listen((data) {
+            .listen((data) async {
               Student student = Student.fromDocumentSnapshot(data);
+              
+              //General score
+              red.GeneralServiceResponse historyData = await red.getService("user/score/${student.uid}");
+              Score score = Score.fromJson(historyData.body);
+              student.totalPoints = score.total;
+
+              //Grade name
               _firebaseintance.collection("grade").document(student.gradeId).get().then((value){
                 student.gradeName = value["name"];
                 studentSink(student);
@@ -125,10 +133,13 @@ class Provider{
         resume.add(resumeItem);
       }
       historyExperiencegSink(resume);
+    }).onError((error){
+      print(error);
+      historyExperiencegSink(resume);
     });
   }
 
-  sentToWpp(String content, BuildContext context){
+  sendToWpp(String content, BuildContext context){
     FirebaseAuth.instance
         .currentUser()
         .then((currentStudent) {
@@ -138,9 +149,9 @@ class Provider{
             .snapshots()
             .listen((data) {
               Student student = Student.fromDocumentSnapshot(data);
-              String message = 'Hola! soy ${student.name} y tengo esta idea "$content" para una experiencia, hagamos algo increible 🚀';
+              String message = 'Hola! soy ${student.name} y tengo una idea para crear una experiencia, hagamos algo increible 🚀';
               String link = 
-                         'https://api.whatsapp.com/send?phone=573008480389&text=$message';              
+                         'https://api.whatsapp.com/send?phone=573002645663&text=$message';              
               lanzarUrl(link, context);
             });
         });
@@ -153,4 +164,11 @@ class Provider{
     Toast.show("Error al inciar el chat", context);
   }
 }
+}
+
+class Score{
+  int total;
+  Score.fromJson(Map data){
+    total = data["total_points"];
+  }
 }

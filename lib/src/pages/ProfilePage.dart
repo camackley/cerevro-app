@@ -107,7 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 20,
               ),
-              Text("${student.totalPoints.toString()} pts.", style: TextStyle(color: Colors.white, fontSize: 30)),
+              //(student.totalPoints.toString() == null) ? "0" : student.totalPoints.toString()
+              Text(student.totalPoints.toString()+" pts.", style: TextStyle(color: Colors.white, fontSize: 30)),
               SizedBox(
                 height: 20,
               ),
@@ -146,12 +147,26 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         }else if(snapshot.data.length == 0){
           return Padding(
-            padding: null,
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
             child: Column(
               crossAxisAlignment : CrossAxisAlignment.center,
               children: [
                 SizedBox(height: size.height * 0.6),
-                Text("Aún no has participado en ninguna experiencia, prueba una hora 🥽")
+                Container(
+                  child: Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Text("Aún no has probado ninguna experiencia 🥽", style: TextStyle( fontSize: 17), textAlign: TextAlign.center,),
+                        ],
+                      ),
+                    )
+                  ))
               ],
             ),
           );

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +9,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cerevro_app/src/models/Experience.dart';
 import 'package:cerevro_app/src/models/Learning.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
-
-const debug = true;
 
 class ExperiencePage extends StatefulWidget {
   static String tag = "experience-page";
@@ -28,9 +25,9 @@ class _ExperiencePageState extends State<ExperiencePage> {
   final _provider = Provider();
 
   bool _loading = false;
+  bool _isWeiting = false;
 
   /* Download Task */
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +38,13 @@ class _ExperiencePageState extends State<ExperiencePage> {
     final size = MediaQuery.of(context).size;
     Experience experience = ModalRoute.of(context).settings.arguments;
     _provider.getLearnings(experience.uid);
-    
+  
+    var isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    if(isLandScape && _isWeiting){
+      //Navigator.of(context).pushNamed(ExperieceUnityPage.tag);
+    }
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(14, 68, 123, 1.0),
       body: ModalProgressHUD(
@@ -75,23 +78,14 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 ],
               ),
               onTap: (){
-                setState((){
-                  _loading = true;
-                });
-
-                if(Platform.isAndroid){
-                  _executeAndroidExperience(experience.archives[1].urlFile);
-                }else if(Platform.isIOS){
-                  print(experience.archives[0].type);
-                  print(experience.archives[0].urlFile);
-                }
+                _showInstructions(context, size);
               }
             ),
             Container(
               height: size.height *0.1,
               child: AppBar(
                 leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: ()=>{Navigator.of(context).pop()}),
-                actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: ()=>{print("tap...")})],
+                /* actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: ()=>{print("tap...")})], */
                 backgroundColor: Colors.transparent,
               ),
             ),
@@ -147,7 +141,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                             ],
                           ),
                           SizedBox(height: 10,),
-                          _getLearningCards(),
+                          _getLearningCards(size),
                           SizedBox(height: 10,),
                         ],
                       ),
@@ -161,7 +155,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     );
   }
 
-  Widget _getLearningCards() {
+  Widget _getLearningCards(Size size) {
     return StreamBuilder(
       stream: _provider.learningStream,
       builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -197,7 +191,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                         trailing: Icon(Icons.play_circle_filled, color: Color.fromRGBO(25, 91, 145, 1),),
                       ),
                   ),
-                  onTap: ()=>{print(snapshot.data[index].uid)},
+                  onTap: ()=>{_showInstructions(context, size)},
                 );
               },
               itemCount: snapshot.data.length,
@@ -234,6 +228,38 @@ class _ExperiencePageState extends State<ExperiencePage> {
       int meses =(now.difference(creatioDate).inDays / 30).round();
       return "Hace ${(meses / 12).round()} años";
     }
+  }
+
+  _showInstructions(BuildContext context, Size size) {
+    _isWeiting = true;
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            elevation: 15.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            title: Text("Coloca el teléfono en el visor para comenzar", style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+            content: Container(
+              height: size.height * 0.3,
+              child: Column(
+                children: [
+                   Container(
+                     child: Image(
+                       image: Svg(
+                          "assets/icons/simplevr.svg", 
+                          height: (size.height * 0.2).round(),
+                          width: (size.width * 0.3).round(),),
+                        color: Color.fromRGBO(244, 131, 25, 1.0),),
+                   ), 
+                  Text("No te olvides de activar la rotación de pantalla", style: TextStyle(fontSize: 17), textAlign: TextAlign.center,),
+                ],
+              ),
+            ),
+          );
+        }
+        );
   }
 
   _executeAndroidExperience(urlFile) async {

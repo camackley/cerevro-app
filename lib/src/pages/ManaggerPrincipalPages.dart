@@ -22,7 +22,7 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
   Future<dynamic> resUser;
   List<Topic> topics = new List<Topic>();
 
-  PageController _pageController;
+  PageController pageController;
   int _selectIndex = 0;
 
   final studentProvider = new Provider();
@@ -33,20 +33,21 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    pageController = PageController();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(3, 58, 102, 1),
       body: PageView(
-        controller: _pageController,
+        controller: pageController,
         children: [
           HomePage(),
           SearchPage(),
@@ -88,10 +89,9 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
       ], 
       onItemSelected: (index) => setState((){
         _selectIndex = index;
-        _pageController.animateToPage(index,
+        pageController.animateToPage(index,
                   duration: Duration(milliseconds: 300), curve: Curves.ease);
       })
     );
   }
-
 }

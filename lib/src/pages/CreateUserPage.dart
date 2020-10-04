@@ -28,6 +28,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
   bool _obscureText = true;
   IconData _obscureTextIcon = Icons.remove_red_eye;
 
+  String _lastemail = "";
+
   CerevroInputInputController nameController = new CerevroInputInputController();
   CerevroInputInputController emailController = new CerevroInputInputController();
   CerevroInputInputController passwordController = new CerevroInputInputController();
@@ -62,11 +64,11 @@ class _CreateUserPageState extends State<CreateUserPage> {
       child: Column(
         children: [
           Stepper(
-            key: Key("4"),
+            key: Key("2"),
             type: StepperType.vertical,
             currentStep: _currentStep,
             onStepTapped: (int step) => setState(() => _currentStep = step),
-            onStepContinue: _currentStep < 3 ? () => setState(() => _currentStep += 1) : null,
+            onStepContinue: _currentStep < 1 ? () => setState(() => _currentStep += 1) : null,
             onStepCancel: _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
             controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
               return Container(
@@ -138,7 +140,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                 isActive: _currentStep >= 0,
                 state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
               ),
-              new Step(
+              /* new Step(
                 title: Text('¿En qué colegio estudias?', style: TextStyle(fontSize: 17),),
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,10 +195,10 @@ class _CreateUserPageState extends State<CreateUserPage> {
                 ),
                 isActive: _currentStep >= 0,
                 state: _currentStep >= 3 ? StepState.complete : StepState.disabled,
-              ),
+              ), */
             ],
           ),          
-          SizedBox(height: size.height * 0.15,),
+          SizedBox(height: size.height * 0.1,),
           Divider(),
           GestureDetector(
             child: Container(
@@ -258,6 +260,15 @@ class _CreateUserPageState extends State<CreateUserPage> {
         }else{
           confirmPasswordController.isError = false;
           confirmPasswordController.errorText = "";
+        }
+
+        if(response){
+          setState(() {
+            _loading = true;
+          });
+          emailController.isError = false;
+          emailController.errorText = "";
+          _createUser();
         }
 
         return response;
@@ -388,22 +399,23 @@ class _CreateUserPageState extends State<CreateUserPage> {
   }
 
   void _createUser() {
-    String _lastemail = "";
     if(_lastemail!=emailController.editingController.text){
       _lastemail=emailController.editingController.text;
-    _authFirebaseIntance.createUserWithEmailAndPassword(
+      _authFirebaseIntance.createUserWithEmailAndPassword(
         email: emailController.editingController.text, 
         password: passwordController.editingController.text
-    )
-    .then((authRes) {
+      )
+      .then((authRes) {
+      //gradeController.controller.uid =      "72iQCT5fvDh0xRfBXyGO";
+      //gradeController.controller.schoolId = "FOSRSJ5tqv3ZARGyTOf0";
       var data = {
         "state" : true,
         "name" : nameController.editingController.text,
         "token": authRes.user.uid,
         "email": emailController.editingController.text,
         "avatar_url": "",
-        "grade_id" : gradeController.controller.uid,
-        "school_id":  gradeController.controller.schoolId
+        "grade_id" : "72iQCT5fvDh0xRfBXyGO",
+        "school_id":  "FOSRSJ5tqv3ZARGyTOf0"
       };
       _firestoreInstance
         .collection("students")
@@ -419,7 +431,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
             Toast.show("Error al insertar los datos", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
           });
     })
-    .catchError((e){
+      .catchError((e){
+        print(e);
         emailController.isError = true;
         emailController.errorText = "Oh no! este correo ya exite";
 
@@ -429,7 +442,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
         });
       }
     );
-  }
+    }
   }
 
 }

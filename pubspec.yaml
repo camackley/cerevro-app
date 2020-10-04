@@ -33,6 +33,7 @@ dependencies:
   flutter_svg_provider: ^0.1.5
   google_fonts: ^1.1.0
   flutter_downloader: ^1.5.0
+  http: ^0.12.0+1
 
 dev_dependencies:
   flutter_test:

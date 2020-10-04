@@ -113,7 +113,7 @@ class _SearchPageState extends State<SearchPage> {
                       color: Color.fromRGBO(244, 131, 25, 1),
                       width: size.width * 0.7,
                       execute: () {
-                        provider.sentToWpp(searchController.editingController.text, context);
+                        provider.sendToWpp(searchController.editingController.text, context);
                       }
                     )
                   ],

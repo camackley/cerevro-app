@@ -7,6 +7,7 @@ import 'package:cerevro_app/src/components/CerevroCard.dart';
 import 'package:cerevro_app/src/models/Experience.dart';
 import 'package:cerevro_app/src/models/Student.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
+import '../components/CerevroButton.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = "home-page";
@@ -152,7 +153,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onTap: () {
-        //TODO: Hacer filtro login
+        _showPreSaleMessage(context, size);
       },
     );
   }
@@ -169,6 +170,28 @@ class _HomePageState extends State<HomePage> {
           itemCount: experiencesNew.length,
         )
     );
+  }
+
+  _showPreSaleMessage(BuildContext context, Size size) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            elevation: 15.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            title: Text("Oh no! este solo es un demo 😟", style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+            content: Text("Comienza ahora en un plan especial por nuestro pre lanzamiento", style: TextStyle(fontSize: 17), textAlign: TextAlign.center,),
+            actions: <Widget>[
+              CerevroButton(
+            text: "Comenzar ahora",
+            color: Color.fromRGBO(244, 131, 25, 1),
+            width: size.width * 0.9,
+            execute: () => {provider.lanzarUrl("https://cerevro.app/contacto", context)}),
+            ],
+          );
+        });
   }
 
   _getNewsExperiences(){
