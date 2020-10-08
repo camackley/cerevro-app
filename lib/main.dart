@@ -1,3 +1,4 @@
+import 'package:cerevro_app/src/pages/UnityExperiece.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cerevro_app/src/pages/LoginPage.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         LoginPage.tag: (context) =>LoginPage(),
         ManaggerPrincipalPages.tag: (context)=> ManaggerPrincipalPages(),
         ExperiencePage.tag: (context)=>ExperiencePage(),
+        UnityExperiecePage.tag: (context) => UnityExperiecePage(),
       },
     );
   }

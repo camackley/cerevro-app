@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cerevro_app/src/pages/UnityExperiece.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -42,7 +43,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     var isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     if(isLandScape && _isWeiting){
-      //Navigator.of(context).pushNamed(ExperieceUnityPage.tag);
+      Navigator.of(context).pushNamed(UnityExperiecePage.tag);
     }
 
     return Scaffold(
