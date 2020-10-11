@@ -39,14 +39,35 @@ class _ExperiencePageState extends State<ExperiencePage> {
     final size = MediaQuery.of(context).size;
     Experience experience = ModalRoute.of(context).settings.arguments;
     _provider.getLearnings(experience.uid);
-  
-    var isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
 
-    if(isLandScape && _isWeiting){
-      Navigator.of(context).pushNamed(UnityExperiecePage.tag);
-    }
+    return WillPopScope(
+      child: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation){
+          if(orientation == Orientation.landscape && _isWeiting){
+            return UnityExperiecePage();
+          }else if(orientation == Orientation.landscape && !_isWeiting){
+            return experienceResume(experience, size, context);
+          }else{
+            return experienceResume(experience, size, context);
+          }
+        }
+      ),
+      onWillPop: () async {
+        if(_isWeiting){
+          _isWeiting = false;
+          setState((){});
+          return false;
+        }else{
+         Navigator.of(context).pop();
+         return true;
+        }
+      },
+    );
 
-    return Scaffold(
+}
+
+  Widget  experienceResume(Experience experience, Size size, BuildContext context){
+        return Scaffold(
       backgroundColor: Color.fromRGBO(14, 68, 123, 1.0),
       body: ModalProgressHUD(
         inAsyncCall: _loading,
@@ -142,7 +163,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                             ],
                           ),
                           SizedBox(height: 10,),
-                          _getLearningCards(size),
+                          /* _getLearningCards(size), */
                           SizedBox(height: 10,),
                         ],
                       ),
@@ -154,6 +175,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
         ),
       )
     );
+  
   }
 
   Widget _getLearningCards(Size size) {
@@ -261,9 +283,5 @@ class _ExperiencePageState extends State<ExperiencePage> {
           );
         }
         );
-  }
-
-  _executeAndroidExperience(urlFile) async {
-    
   }
 }

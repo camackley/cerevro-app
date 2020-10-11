@@ -1,7 +1,6 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:cerevro_app/src/pages/ManaggerPrincipalPages.dart';
 import 'package:cerevro_app/src/pages/LoginPage.dart';
@@ -17,9 +16,12 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+
+  
   final preferences = new UserPreferences();
   @override
   initState() {
+    super.initState();
     FirebaseAuth.instance
         .currentUser()
         .then((currentUser) async {
@@ -54,6 +56,7 @@ class _SplashPageState extends State<SplashPage> {
       );
   }
 
+  
   void _createDB() {
     final _firestoreInstance = Firestore.instance; 
     var experiences = [

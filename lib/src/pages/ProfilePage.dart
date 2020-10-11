@@ -1,6 +1,7 @@
 import 'package:cerevro_app/src/components/CerevroButton.dart';
 import 'package:cerevro_app/src/models/Student.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';

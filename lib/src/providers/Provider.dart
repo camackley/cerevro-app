@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cerevro_app/src/models/Questions.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,6 +33,12 @@ class Provider{
   Function(List<ResumeExperience>) get historyExperiencegSink => _historyExperienceStream.sink.add;
   Stream<List<ResumeExperience>> get historyExperienceStream => _historyExperienceStream.stream;
 
+  final _quizStream = StreamController<List<Questions>>.broadcast();
+
+  Function(List<Questions>) get quizSink => _quizStream.sink.add;
+  Stream<List<Questions>> get quizStream => _quizStream.stream;
+
+
   /* Firebase Instance */
   var _firebaseintance = Firestore.instance; 
 
@@ -40,6 +47,7 @@ class Provider{
     _learningStream?.close();
     _searchExperienceStream?.close();
     _historyExperienceStream?.close();
+    _quizStream?.close();
   }
 
   getCurrentStudent() async {
@@ -137,6 +145,16 @@ class Provider{
       print(error);
       historyExperiencegSink(resume);
     });
+  }
+
+  getQuiz(String uid) async {
+    red.GeneralServiceResponse historyData = await red.getService("experiences/getQuiz/$uid");
+    List<Questions> questions = new List<Questions>();
+    historyData.body.forEach((item) {
+      Questions question = new Questions.fromJson(item);
+      questions.add(question);
+    });
+    quizSink(questions);
   }
 
   sendToWpp(String content, BuildContext context){

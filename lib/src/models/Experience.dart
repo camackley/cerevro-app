@@ -59,7 +59,7 @@ class ResumeExperience{
 
   ResumeExperience.fromDocumentSnapshot(DocumentSnapshot data){
     this.title = data["title"];
-    this.date = data["date"];
+    this.date = Timestamp.fromMillisecondsSinceEpoch(data["date"]);
     this.points = data["points"];
   }
 

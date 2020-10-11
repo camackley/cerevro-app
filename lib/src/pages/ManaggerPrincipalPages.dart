@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'package:cerevro_app/library/BottomNavyBar.dart';
-
-import 'package:cerevro_app/src/components/CerevroInputField.dart';
 import 'package:cerevro_app/src/models/Topic.dart';
 import 'package:cerevro_app/src/pages/ProfilePage.dart';
 import 'package:cerevro_app/src/pages/SearchPage.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
+import 'package:cerevro_app/src/components/CerevroInputField.dart';
 
 import 'HomePage.dart';
 
@@ -33,6 +33,7 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
   @override
   void initState() {
     super.initState();
+    this.initDynamicLinks();
     pageController = PageController();
   }
 
@@ -58,6 +59,22 @@ class _ManaggerPrincipalPagesState extends State<ManaggerPrincipalPages> {
         },
       ),
       bottomNavigationBar: _getBottomNavigationBar(),
+    );
+  }
+
+  void initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+      onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        final Uri deepLink = dynamicLink?.link;
+
+        if (deepLink != null) {
+          Navigator.of(context).pushNamed(deepLink.path);
+        }
+      },
+      onError: (OnLinkErrorException e) async {
+        print('onLinkError');
+        print(e.message);
+      }
     );
   }
 

@@ -35,6 +35,7 @@ dependencies:
   flutter_downloader: ^1.5.0
   http: ^0.12.0+1
   flutter_unity: ^0.2.1+5
+  firebase_dynamic_links: any
 
 dev_dependencies:
   flutter_test:

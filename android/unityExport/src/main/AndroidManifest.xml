@@ -7,7 +7,7 @@
     <meta-data android:name="unity.splash-mode" android:value="0" />
     <meta-data android:name="unity.splash-enable" android:value="False" />
     <meta-data android:name="notch.config" android:value="portrait|landscape" />
-    <meta-data android:name="unity.build-id" android:value="0107bdb4-30d6-4791-94f8-60c6ccf63304" />
+    <meta-data android:name="unity.build-id" android:value="e9b740b5-2570-4973-89b0-a1bbb44955fe" />
   </application>
   <uses-feature android:glEsVersion="0x00030000" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
