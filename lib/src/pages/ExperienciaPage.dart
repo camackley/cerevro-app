@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:cerevro_app/src/pages/UnityExperiece.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -40,30 +39,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     Experience experience = ModalRoute.of(context).settings.arguments;
     _provider.getLearnings(experience.uid);
 
-    return WillPopScope(
-      child: OrientationBuilder(
-        builder: (BuildContext context, Orientation orientation){
-          if(orientation == Orientation.landscape && _isWeiting){
-            return UnityExperiecePage();
-          }else if(orientation == Orientation.landscape && !_isWeiting){
-            return experienceResume(experience, size, context);
-          }else{
-            return experienceResume(experience, size, context);
-          }
-        }
-      ),
-      onWillPop: () async {
-        if(_isWeiting){
-          _isWeiting = false;
-          setState((){});
-          return false;
-        }else{
-         Navigator.of(context).pop();
-         return true;
-        }
-      },
-    );
-
+    return experienceResume(experience, size, context);
 }
 
   Widget  experienceResume(Experience experience, Size size, BuildContext context){
@@ -100,7 +76,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 ],
               ),
               onTap: (){
-                _showInstructions(context, size);
+                Provider().lanzarUrl("https://cerevro.page.link/experience", context);
               }
             ),
             Container(

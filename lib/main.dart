@@ -9,6 +9,7 @@ import 'package:cerevro_app/src/pages/ExperienciaPage.dart';
 import 'package:cerevro_app/src/pages/SplashPage.dart';
 import 'package:cerevro_app/src/pages/WelcomeScrollPage.dart';
 import 'package:cerevro_app/src/utils/user_preferences.dart';
+import 'package:flutter/services.dart';
 
  
 void main(){
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
