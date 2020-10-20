@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cerevro_app/src/models/Questions.dart';
 import 'package:cerevro_app/src/providers/Provider.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+//import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:toast/toast.dart';
 
 import 'package:cerevro_app/src/providers/Network.dart' as red;
@@ -72,7 +72,6 @@ class _QuizPageState extends State<QuizPage> {
       )
     );
   }
-
 
   Widget representation(BuildContext context, Size size){
     return Column(

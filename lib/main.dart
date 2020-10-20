@@ -1,5 +1,6 @@
 import 'package:cerevro_app/src/pages/QuizPage.dart';
 import 'package:cerevro_app/src/pages/UnityExperiece.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cerevro_app/src/pages/LoginPage.dart';
@@ -19,7 +20,6 @@ void main(){
 class MyApp extends StatelessWidget {
   
   final preferences = new UserPreferences();
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
