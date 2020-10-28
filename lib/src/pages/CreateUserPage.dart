@@ -55,162 +55,165 @@ class _CreateUserPageState extends State<CreateUserPage> {
   Widget _getBody(BuildContext context, Size size) {
 
     return Container(
-      height: double.infinity,
+      height: size.height,
       width: size.width,
       decoration: BoxDecoration(  
         color: Colors.white,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight:  Radius.circular(15.0))
       ),
-      child: Column(
-        children: [
-          Stepper(
-            key: Key("2"),
-            type: StepperType.vertical,
-            currentStep: _currentStep,
-            onStepTapped: (int step) => setState(() => _currentStep = step),
-            onStepContinue: _currentStep < 1 ? () => setState(() => _currentStep += 1) : null,
-            onStepCancel: _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
-            controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
-              return Container(
-                margin: EdgeInsets.only(top: 20.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      onPressed: () {
-                        if(_validate(_currentStep) && _validate(_currentStep) != null){
-                          onStepContinue();
-                        }else{
-                          setState(() {});
-                        }
-                      },
-                      child: Container(width: size.width * 0.2, child: Center(child: Text("Siguiente", style: TextStyle(color: Colors.white, fontSize: 17),))), color:Color.fromRGBO(244, 131, 25, 1),),
-                    SizedBox(width: 20.0,),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      onPressed: onStepCancel,
-                      child: Container(width: size.width * 0.2, child: Center(child: Text("Atrás", style: TextStyle(color: Colors.white, fontSize: 17),))), color:Color.fromRGBO(25, 91, 145, 1),),                
-                ],),
-              );
-            },
-            steps: [
-              new Step(
-                title: Text('¿Quién eres?', style: TextStyle(fontSize: 17),),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Nombre", style: TextStyle(fontSize: 17)),
-                      CerevroInputField(
-                        editingController: nameController.editingController,
-                        isError: nameController.isError,
-                        textInputType: TextInputType.name,
-                        errorText: nameController.errorText,
-                      )
-                  ],
-                ),
-                isActive: _currentStep >= 0,
-                state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
-              ),
-              new Step(
-                title: Text('Crea tú cuenta', style: TextStyle(fontSize: 17),),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                      Text("Coreo electronico", style: TextStyle(fontSize: 17)),
-                      CerevroInputField(
-                        editingController: emailController.editingController,
-                        isError: emailController.isError,
-                        textInputType: TextInputType.emailAddress,
-                        errorText: emailController.errorText,
-                      ),
-                      SizedBox(height: 10,),
-                      Text("Contraseña", style: TextStyle(fontSize: 17)),
-                      getPasswordField (passwordController),
-                      SizedBox(height: 10,),
-                      Text("Confirma la contraseña", style: TextStyle(fontSize: 17)),
-                      getPasswordField (confirmPasswordController),
-                  ],
-                ),
-                isActive: _currentStep >= 0,
-                state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
-              ),
-              /* new Step(
-                title: Text('¿En qué colegio estudias?', style: TextStyle(fontSize: 17),),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                      Text("Código de tu colegio", style: TextStyle(fontSize: 17)),
-                      CerevroInputField(
-                        editingController: schoolCodePasswordController.editingController,
-                        isError: schoolCodePasswordController.isError,
-                        textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                        errorText: schoolCodePasswordController.errorText,
-                      ),
-                  ],
-                ),
-                isActive: _currentStep >= 0,
-                state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
-              ),
-              new Step(
-                title: Text('¿En qué grado estas?', style: TextStyle(fontSize: 17),),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                      Text("Selecciona tu salón", style: TextStyle(fontSize: 17)),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(230, 230, 230, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          border: Border.all(
-                          color: (gradeController.isError) ? Colors.red : Colors.transparent
-                         )
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+         child: Column(
+          children: [
+            Stepper(
+              key: Key("2"),
+              type: StepperType.vertical,
+              currentStep: _currentStep,
+              onStepTapped: (int step) => setState(() => _currentStep = step),
+              onStepContinue: _currentStep < 1 ? () => setState(() => _currentStep += 1) : null,
+              onStepCancel: _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
+              controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
+                return Container(
+                  margin: EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)
                         ),
-                        child: ListTile(
-                          title: DropdownButton<Grade>(
-                            value: gradeController.controller,
-                            icon: Icon(Icons.arrow_drop_down, color: Color.fromRGBO(13, 70, 725, 1),),
-                            iconSize: 20,
-                            elevation: 10,
-                            items: gradesDropdown,
-                            underline: SizedBox(),
-                            onChanged: (Grade gradeSelected){
-                              setState(() {
-                                gradeController.controller= gradeSelected;
-                              });
-                            },
-                          ),
-                          trailing: (gradeController.isError) ? Icon(Icons.cancel, color: Colors.red) : SizedBox(),
+                        onPressed: () {
+                          if(_validate(_currentStep) && _validate(_currentStep) != null){
+                            onStepContinue();
+                          }else{
+                            setState(() {});
+                          }
+                        },
+                        child: Container(width: size.width * 0.2, child: Center(child: Text("Siguiente", style: TextStyle(color: Colors.white, fontSize: 17),))), color:Color.fromRGBO(244, 131, 25, 1),),
+                      SizedBox(width: 20.0,),
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        onPressed: onStepCancel,
+                        child: Container(width: size.width * 0.2, child: Center(child: Text("Atrás", style: TextStyle(color: Colors.white, fontSize: 17),))), color:Color.fromRGBO(25, 91, 145, 1),),                
+                  ],),
+                );
+              },
+              steps: [
+                new Step(
+                  title: Text('¿Quién eres?', style: TextStyle(fontSize: 17),),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Nombre", style: TextStyle(fontSize: 17)),
+                        CerevroInputField(
+                          editingController: nameController.editingController,
+                          isError: nameController.isError,
+                          textInputType: TextInputType.name,
+                          errorText: nameController.errorText,
                         )
-                      ),
-                      gradeController.isError ? Text(gradeController.errorText, style: TextStyle(color: Colors.red, fontSize: 18.0)) : SizedBox()
-                  ],
+                    ],
+                  ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
                 ),
-                isActive: _currentStep >= 0,
-                state: _currentStep >= 3 ? StepState.complete : StepState.disabled,
-              ), */
-            ],
-          ),          
-          SizedBox(height: size.height * 0.1,),
-          Divider(),
-          GestureDetector(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.15, vertical: 20),
-              child: Text("¿Ya tines cuenta? Ingresa ahora", 
-                      style: TextStyle(color: Color.fromRGBO(25, 91, 145, 1), fontSize: 17, fontWeight: FontWeight.bold),),
+                new Step(
+                  title: Text('Crea tú cuenta', style: TextStyle(fontSize: 17),),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text("Coreo electronico", style: TextStyle(fontSize: 17)),
+                        CerevroInputField(
+                          editingController: emailController.editingController,
+                          isError: emailController.isError,
+                          textInputType: TextInputType.emailAddress,
+                          errorText: emailController.errorText,
+                        ),
+                        SizedBox(height: 10,),
+                        Text("Contraseña", style: TextStyle(fontSize: 17)),
+                        getPasswordField (passwordController),
+                        SizedBox(height: 10,),
+                        Text("Confirma la contraseña", style: TextStyle(fontSize: 17)),
+                        getPasswordField (confirmPasswordController),
+                    ],
+                  ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
+                ),
+                /* new Step(
+                  title: Text('¿En qué colegio estudias?', style: TextStyle(fontSize: 17),),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text("Código de tu colegio", style: TextStyle(fontSize: 17)),
+                        CerevroInputField(
+                          editingController: schoolCodePasswordController.editingController,
+                          isError: schoolCodePasswordController.isError,
+                          textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
+                          errorText: schoolCodePasswordController.errorText,
+                        ),
+                    ],
+                  ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
+                ),
+                new Step(
+                  title: Text('¿En qué grado estas?', style: TextStyle(fontSize: 17),),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text("Selecciona tu salón", style: TextStyle(fontSize: 17)),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(230, 230, 230, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                            border: Border.all(
+                            color: (gradeController.isError) ? Colors.red : Colors.transparent
+                           )
+                          ),
+                          child: ListTile(
+                            title: DropdownButton<Grade>(
+                              value: gradeController.controller,
+                              icon: Icon(Icons.arrow_drop_down, color: Color.fromRGBO(13, 70, 725, 1),),
+                              iconSize: 20,
+                              elevation: 10,
+                              items: gradesDropdown,
+                              underline: SizedBox(),
+                              onChanged: (Grade gradeSelected){
+                                setState(() {
+                                  gradeController.controller= gradeSelected;
+                                });
+                              },
+                            ),
+                            trailing: (gradeController.isError) ? Icon(Icons.cancel, color: Colors.red) : SizedBox(),
+                          )
+                        ),
+                        gradeController.isError ? Text(gradeController.errorText, style: TextStyle(color: Colors.red, fontSize: 18.0)) : SizedBox()
+                    ],
+                  ),
+                  isActive: _currentStep >= 0,
+                  state: _currentStep >= 3 ? StepState.complete : StepState.disabled,
+                ), */
+              ],
+            ),          
+            SizedBox(height: size.height * 0.1,),
+            Divider(),
+            GestureDetector(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.15, vertical: 20),
+                child: Text("¿Ya tines cuenta? Ingresa ahora", 
+                        style: TextStyle(color: Color.fromRGBO(25, 91, 145, 1), fontSize: 17, fontWeight: FontWeight.bold),),
+              ),
+              onTap: () => {
+                Navigator.of(context).pushNamed(LoginPage.tag)
+              }
             ),
-            onTap: () => {
-              Navigator.of(context).pushNamed(LoginPage.tag)
-            }
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

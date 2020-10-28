@@ -33,22 +33,20 @@ class _LoginPageState extends State<LoginPage> {
      return Scaffold(
             backgroundColor: Color.fromRGBO(14, 68, 123, 1.0),
             body:  Container (
-              child: ListView(
-                shrinkWrap: true,
-                  children: [
-                    Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(height: size.height * 0.03),
-                      Hero(
-                        tag: "header-login.webp",
-                        child: Image(image: AssetImage("assets/img/header-login.webp"))
-                      ),
-                      SizedBox(height: size.height * 0.05),
-                      _getLoginForm(context, size),
-                  ],
+              child:SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(height: size.height * 0.03),
+                        Hero(
+                          tag: "header-login.webp",
+                          child: Image(image: AssetImage("assets/img/header-login.webp"))
+                        ),
+                        SizedBox(height: size.height * 0.05),
+                        _getLoginForm(context, size),
+                    ],
                 ),
-                  ]
               ),
             ),
     );
@@ -56,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget  _getLoginForm(context, size) {
     return Container(
-      height: size.height * 0.6,
+      height: size.height * 0.65,
       width: size.width,
       decoration: BoxDecoration(
         color: Colors.white,
