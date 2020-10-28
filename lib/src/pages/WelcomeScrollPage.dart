@@ -12,70 +12,75 @@ class WelcomeScrollpage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          _page1(size, context),
-          _page2(size, context),
-          _page3(size, context)
-        ]
-      ),
+        body: PageView(
+              controller: _pageController,
+              children: <Widget>[
+                _page1(size, context),
+                _page2(size, context),
+                _page3(size, context)
+              ]
+        )
     );
   }
 
   Widget _page1(Size size, BuildContext context){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-      child: Column(
-        children: [
-          SizedBox(height: 100,),
-          Image(image: AssetImage("assets/img/logo-vertical.webp"), width: size.width* 0.7,),
-          SizedBox(height: 80,),
-          Text("Mejoramos tú calida educativa", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 20, fontWeight: FontWeight.bold),),
-          SizedBox(height: 29,),
-          Row(
-            children: [
-              Container(
-                width: size.width* 0.38,
-                child: Column(
-                  children: [
-                    Text("90%", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25,),),
-                    Text("Más de probabilidad de recordar lo estudiado", style: TextStyle(fontSize: 17, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center,)
-                  ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            SizedBox(height: size.height * 0.1,),
+            Image(image: AssetImage("assets/img/logo-vertical.webp"), width: size.width* 0.7,),
+            SizedBox(height: size.height * 0.05,),
+            Text("Mejoramos tú calida educativa", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 20, fontWeight: FontWeight.bold),),
+            SizedBox(height: size.height * 0.05,),
+            Row(
+              children: [
+                Container(
+                  width: size.width* 0.38,
+                  child: Column(
+                    children: [
+                      Text("90%", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25,),),
+                      Text("Más de probabilidad de recordar lo estudiado", style: TextStyle(fontSize: 17, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(width: 10,),
-              Container(
-                width: size.width* 0.38,
-                child: Column(
-                  children: [
-                    Text("84%", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25),),
-                    Text("De aumento en la motivación de los alumnos", style: TextStyle(fontSize: 17, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center, )
-                  ],
+                SizedBox(width: size.height * 0.01,),
+                Container(
+                  width: size.width* 0.38,
+                  child: Column(
+                    children: [
+                      Text("84%", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25),),
+                      Text("De aumento en la motivación de los alumnos", style: TextStyle(fontSize: 17, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center, )
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          _buttomOptions(0, "Siguiente", size, context)
-        ],
+              ],
+            ),
+            _buttomOptions(0, "Siguiente", size, context)
+          ],
+        ),
       ),
     );
   }
   
   Widget _page2(Size size, BuildContext context){
-    return Column(
-      children: [ 
-        SizedBox(height: 100,),
-        Image(image: AssetImage("assets/img/splash-2.webp"), width: size.width* 0.8,),
-        SizedBox(height: 60,),
-        Text("Basados en Gamificación", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25, fontWeight: FontWeight.bold),),
-        SizedBox(height: 10,),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-          child: Text("Todas nuestras experiencias están diseñadas para que el estudiante aprenda con una motivción constante", style: TextStyle(fontSize: 20, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center,)),
-        SizedBox(height: 8,),
-        _buttomOptions(1, "Siguiente", size, context),
-      ]
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [ 
+          SizedBox(height: size.height * 0.1,),
+          Image(image: AssetImage("assets/img/splash-2.webp"), width: size.width* 0.8,),
+          SizedBox(height: size.height * 0.05,),
+          Text("Basados en Gamificación", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25, fontWeight: FontWeight.bold),),
+          SizedBox(height: size.height * 0.01,),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            child: Text("Todas nuestras experiencias están diseñadas para que el estudiante aprenda con una motivción constante", style: TextStyle(fontSize: 20, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center,)),
+          _buttomOptions(1, "Siguiente", size, context),
+        ]
+      ),
     );
   }
 
@@ -83,7 +88,7 @@ class WelcomeScrollpage extends StatelessWidget {
 
     final backgroundBox = Container(
       width: size.width * 0.8,
-      height: size.height * 0.35,
+      height: size.height * 0.4,
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: FractionalOffset(0.5, 1.0),
@@ -95,26 +100,29 @@ class WelcomeScrollpage extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(100.0))),
     );
 
-    return Column(
-      children:[ 
-        SizedBox(height: 100,),
-        Stack(
-          children: [
-            backgroundBox,
-            Hero(
-              tag: "hader-login.webp",
-              child: Image(image: AssetImage("assets/img/header-login.webp"), width: size.width* 0.8,)
-            ),
-          ],
-        ),
-        SizedBox(height: 80,),
-        Text("Experiencias de realidad virtual", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25, fontWeight: FontWeight.bold),),
-        SizedBox(height: 19,),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-          child: Text("Diseñadas de una manera inmersiva y desarrolladas específicamente para tener un aprendizaje efectivo", style: TextStyle(fontSize: 20, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center,)),
-        _buttomOptions(2, "Comenzar", size, context)
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children:[ 
+          SizedBox(height: size.height * 0.1,),
+          Stack(
+            children: [
+              backgroundBox,
+              Hero(
+                tag: "hader-login.webp",
+                child: Image(image: AssetImage("assets/img/header-login.webp"), width: size.width* 0.8,)
+              ),
+            ],
+          ),
+          SizedBox(height: size.height * 0.05,),
+          Text("Experiencias de realidad virtual", style: TextStyle(color: Color.fromRGBO(244, 131, 25, 1), fontSize: 25, fontWeight: FontWeight.bold),),
+          SizedBox(height: size.height * 0.02,),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            child: Text("Diseñadas de una manera inmersiva y desarrolladas específicamente para tener un aprendizaje efectivo", style: TextStyle(fontSize: 20, color:  Color.fromRGBO(25, 91, 145, 1)), textAlign: TextAlign.center,)),
+          _buttomOptions(2, "Comenzar", size, context)
+        ],
+      ),
     );
   }
 
